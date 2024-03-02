@@ -1,3 +1,4 @@
+/*
 //font imports
 import {Sora} from 'next/font/google'
 
@@ -17,7 +18,7 @@ const Layout = ({children}) => {
   return (
     <div
       className={`page h-screen w-screen bg-sitePng bg-cover bg-no-repeat text-white`}>
-      {/*<TopLeftImg />*/}
+      {/!*<TopLeftImg />*!/}
       <Nav />
       {children}
     </div>
@@ -25,3 +26,4 @@ const Layout = ({children}) => {
 }
 
 export default Layout
+*/

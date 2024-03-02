@@ -33,7 +33,7 @@ const Nav = () => {
   const pathName = usePathname()
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar z-50 bg-base-100">
       <div className="navbar-start">
         <div
           tabIndex={0}
