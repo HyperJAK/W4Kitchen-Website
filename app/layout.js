@@ -1,9 +1,12 @@
-import {Inter} from 'next/font/google'
+import {Rubik} from 'next/font/google'
 import './globals.css'
 import Nav from '@/components/shared/Nav'
-import Logo from '@/components/shared/Logo'
 
-const inter = Inter({subsets: ['latin']})
+const rubikRegular = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+  weight: ['400'],
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,9 +15,15 @@ export const metadata = {
 
 export default function RootLayout({children}) {
   return (
-    <main className={'flex flex-col'}>
-      <Nav />
-      <div className={inter.className}>{children}</div>
-    </main>
+    <html lang="en">
+      <head>
+        <title>Hi</title>
+      </head>
+
+      <body className={`${rubikRegular.variable} flex flex-col font-rubik`}>
+        <Nav />
+        {children}
+      </body>
+    </html>
   )
 }

@@ -7,7 +7,7 @@ import Socials from '@/components/Socials'
 export default function Home() {
   return (
     <>
-      <main className={'flex h-screen flex-col justify-center'}>
+      <main className={'z-40 flex h-screen flex-col justify-center'}>
         <Image
           src={'/testFood.jpg'}
           alt={'featured recipe image'}
@@ -16,10 +16,8 @@ export default function Home() {
         />
         {/*Featured recipe and socials sharing*/}
         <div className={'flex flex-row justify-evenly'}>
-          <RecipeOfTheDay />
-          <div className={'flex items-end'}>
-            <Socials />
-          </div>
+          {/*<RecipeOfTheDay />*/}
+          <div className={'flex items-end'}>{/*<Socials />*/}</div>
         </div>
       </main>
     </>
