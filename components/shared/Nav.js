@@ -68,8 +68,6 @@ const Nav = () => {
   }
 
   const handleProfileButtonClick = () => {
-    console.log('clicked')
-    alert('hello world')
     setProfilePicClicked(!profilePicClicked)
   }
 
@@ -91,7 +89,7 @@ const Nav = () => {
 
   return (
     <>
-      <div className={'z-50 flex flex-col'}>
+      <div className={'z-50 mb-[150px] flex flex-col'}>
         {/*Normal nav*/}
         <div
           className={
@@ -106,7 +104,7 @@ const Nav = () => {
             height={'43'}
           />*/}
             <p
-              className={`${rubikBold.variable} text-opposite font-rubik text-[30px]`}>
+              className={`${rubikBold.variable} font-rubik text-[30px] text-opposite`}>
               W<span className={'text-secondary'}>4</span>Kitchen
               <span className={'text-secondary'}>.</span>
             </p>
@@ -115,7 +113,7 @@ const Nav = () => {
           {/*IMP !!!!!!!!! change font to rubik same as design*/}
           {/*navigation options*/}
           <div
-            className={`flex flex-row justify-center gap-x-10 transition-all ${rubikBold.variable} text-opposite font-rubik text-[18px]`}>
+            className={`flex flex-row justify-center gap-x-10 transition-all ${rubikBold.variable} font-rubik text-[18px] text-opposite`}>
             <Link
               href={'/'}
               className={`${pathName === '/' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
@@ -175,7 +173,6 @@ const Nav = () => {
             {/*Profile button here*/}
             <div
               className={'rounded-full bg-accent p-2'}
-              onMouseEnter={handleProfileButtonClick}
               onClick={handleProfileButtonClick}>
               <Image
                 src={'/icons/person.png'}
@@ -190,7 +187,7 @@ const Nav = () => {
         {/*drop down of profile click*/}
         <div
           className={`${profilePicClicked ? 'block' : 'hidden'} absolute right-0 top-16 mt-1 flex flex-row justify-end bg-transparent ${rubikSemiBold.variable} font-rubik`}>
-          <div className={'text-opposite flex w-full flex-col rounded-bl-2xl'}>
+          <div className={'flex w-full flex-col rounded-bl-2xl text-opposite'}>
             <Button
               style={
                 'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2'

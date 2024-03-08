@@ -1,6 +1,7 @@
 import {Rubik} from 'next/font/google'
 import './globals.css'
 import Nav from '@/components/shared/Nav'
+import * as withClient from 'react'
 
 const rubikRegular = Rubik({
   subsets: ['latin'],
@@ -17,10 +18,11 @@ export default function RootLayout({children}) {
   return (
     <html lang="en">
       <head>
-        <title>Hi</title>
+        <title>W4Kitchen</title>
       </head>
 
-      <body className={`${rubikRegular.variable} flex flex-col font-rubik`}>
+      <body
+        className={`${rubikRegular.variable} flex flex-col bg-page font-rubik`}>
         <Nav />
         {children}
       </body>

@@ -1,24 +1,21 @@
 import Image from 'next/image'
 import Logo from '@/components/shared/Logo'
 import Nav from '@/components/shared/Nav'
-import RecipeOfTheDay from '@/components/home/RecipeOfTheDay'
+import RecipeSearch from '@/components/home/RecipeSearch'
 import Socials from '@/components/Socials'
+import FeaturedRecipes from '@/components/home/FeaturedRecipes'
 
 export default function Home() {
   return (
     <>
-      <main className={'z-40 flex h-screen flex-col justify-center'}>
-        <Image
-          src={'/testFood.jpg'}
-          alt={'featured recipe image'}
-          layout={'fill'}
-          className={'absolute z-10'}
-        />
-        {/*Featured recipe and socials sharing*/}
-        <div className={'flex flex-row justify-evenly'}>
-          {/*<RecipeOfTheDay />*/}
-          <div className={'flex items-end'}>{/*<Socials />*/}</div>
-        </div>
+      <main
+        className={
+          'relative z-30 flex h-auto flex-col justify-center gap-y-[150px]'
+        }>
+        {/*All home page features*/}
+
+        <RecipeSearch />
+        <FeaturedRecipes />
       </main>
     </>
   )
