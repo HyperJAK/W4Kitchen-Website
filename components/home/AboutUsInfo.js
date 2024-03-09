@@ -1,3 +1,4 @@
+'use client'
 //font import
 import {Rubik} from 'next/font/google'
 
@@ -8,6 +9,7 @@ import Link from 'next/link'
 import Socials from '../Socials'
 import Image from 'next/image'
 import Button from '@/components/shared/Button'
+import {useState} from 'react'
 
 const rubikBold = Rubik({
   subsets: ['latin'],
@@ -24,6 +26,20 @@ const rubikRegular = Rubik({
 const AboutUsInfo = () => {
   const handleButtonClick = (event) => {
     alert('hi')
+  }
+
+  const [data, setData] = useState([])
+
+  const handleClick = async () => {
+    try {
+      const response = await fetch('/api/hello') // Adjust path if needed
+      const fetchedData = await response.json()
+      setData(fetchedData)
+      alert(fetchedData)
+    } catch (error) {
+      console.error(error)
+      // Handle errors appropriately, e.g., display an error message
+    }
   }
 
   return (
@@ -65,6 +81,7 @@ const AboutUsInfo = () => {
                 'justify-center flex flex-row border-solid border-secondary border-2 bg-secondary p-10 hover:bg-accent hover:cursor-pointer flex-row flex text-page rounded-2xl hover:text-opposite'
               }
               itemComponents={<p>Read About Us</p>}
+              handle={handleClick}
             />
           </Link>
         </div>
