@@ -25,9 +25,9 @@ const Button = ({itemComponents, handle, style}) => {
       className={
         style
           ? style
-          : `${rubikRegular.variable} button text-opposite flex max-h-40 flex-row rounded-2xl border-2 border-solid border-secondary bg-secondary p-2 font-rubik hover:cursor-pointer hover:bg-transparent`
+          : `${rubikRegular.variable} button flex max-h-40 flex-row justify-center rounded-2xl border-2 border-solid border-secondary bg-secondary p-2 font-rubik text-opposite hover:cursor-pointer hover:bg-transparent`
       }
-      onClick={handle ? handle : ''}>
+      onClick={handle ? handle : null}>
       {itemComponents ? itemComponents : 'empty'}
     </div>
   )
