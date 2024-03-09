@@ -27,175 +27,242 @@ import Link from 'next/link'
 //Next.js Router
 import {usePathname} from 'next/navigation'
 import Image from 'next/image'
-import Logo from '@/components/shared/Logo'
+import {Rubik} from 'next/font/google'
+import Button from '@/components/shared/Button'
+import {useState} from 'react'
+
+const rubikRegular = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+  weight: ['400'],
+})
+
+const rubikBold = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+  weight: ['700'],
+})
+
+const rubikSemiBold = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+  weight: ['600'],
+})
 
 const Nav = () => {
   const pathName = usePathname()
 
+  const [signInEnabled, setSignInEnabled] = useState(false)
+  const [languageClicked, setLanguageClicked] = useState(false)
+  const [profilePicClicked, setProfilePicClicked] = useState(false)
+
+  const handleSignInButtonClick = () => {
+    setSignInEnabled(!signInEnabled)
+    console.log('clicked')
+    //handle other things when sign in clicked
+  }
+
+  const handleLanguageButtonClick = () => {
+    setLanguageClicked(!languageClicked)
+    console.log('clicked')
+  }
+
+  const handleProfileButtonClick = () => {
+    setProfilePicClicked(!profilePicClicked)
+  }
+
+  const handleAccountClick = () => {
+    /*handle account clicked*/
+  }
+
+  const handleDarkModeClick = () => {
+    /*handle dark mode clicked*/
+  }
+
+  const handleContactUsClick = () => {
+    /*handle contact us clicked*/
+  }
+
+  const handleAboutUsClick = () => {
+    /*handle about us clicked*/
+  }
+
   return (
-    <div className="navbar bg-base-100">
-      <div className="navbar-start">
+    <>
+      <div className={'z-50 mb-[150px] flex flex-col'}>
+        {/*Normal nav*/}
         <div
-          tabIndex={0}
-          role="button"
-          className="btn btn-circle btn-ghost">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h7"
-            />
-          </svg>
-        </div>
+          className={
+            ' my-auto flex h-auto w-full flex-row items-center justify-between bg-primary pl-4 pr-4'
+          }>
+          {/*Logo*/}
+          <div>
+            {/*<Image
+            src={'/W4Kitchen.png'}
+            alt={'website logo'}
+            width={'213'}
+            height={'43'}
+          />*/}
+            <p
+              className={`${rubikBold.variable} font-rubik text-[30px] text-opposite`}>
+              W<span className={'text-secondary'}>4</span>Kitchen
+              <span className={'text-secondary'}>.</span>
+            </p>
+          </div>
 
-        <div className="bg-red dropdown z-50 flex xl:hidden">
-          <ul
-            tabIndex={0}
-            className="menu dropdown-content menu-sm z-[1] mt-3 flex w-52 gap-5 rounded-box p-2 shadow">
-            <li>
-              <Link
-                href={'/'}
-                className={`${pathName === '/' ? 'active link' : ''}`}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={`${pathName === '/recipes' ? 'active link' : ''}`}
-                href="/recipes">
-                Recipes
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={`${pathName === '/kitchenTips' ? 'active link' : ''}`}
-                href="/kitchenTips">
-                Kitchen Tips
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={`${pathName === '/shop' ? 'active link' : ''}`}
-                href="/shop">
-                Shop
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={`${pathName === '/news' ? 'active link' : ''}`}
-                href="/news">
-                News
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        <Logo />
-      </div>
-      <div className="navbar-center hidden xl:flex">
-        <ul className="menu menu-horizontal flex gap-5 px-1">
-          <li>
+          {/*IMP !!!!!!!!! change font to rubik same as design*/}
+          {/*navigation options*/}
+          <div
+            className={`flex flex-row justify-center gap-x-10 transition-all ${rubikBold.variable} font-rubik text-[18px] text-opposite`}>
             <Link
               href={'/'}
-              className={`${pathName === '/' ? 'active link' : ''}`}>
+              className={`${pathName === '/' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               Home
             </Link>
-          </li>
-          <li>
+
             <Link
-              className={`${pathName === '/recipes' ? 'active link' : ''}`}
-              href="/recipes">
+              href={'/recipes'}
+              className={`${pathName === '/recipes' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               Recipes
             </Link>
-          </li>
-          <li>
+
             <Link
-              className={`${pathName === '/kitchenTips' ? 'active link' : ''}`}
-              href="/kitchenTips">
+              href={'/kitchenTips'}
+              className={`${pathName === '/kitchenTips' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               Kitchen Tips
             </Link>
-          </li>
-          <li>
+
             <Link
-              className={`${pathName === '/shop' ? 'active link' : ''}`}
-              href="/shop">
+              href={'/shop'}
+              className={`${pathName === '/shop' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               Shop
             </Link>
-          </li>
-          <li>
+
             <Link
-              className={`${pathName === '/news' ? 'active link' : ''}`}
-              href="/news">
+              href={'/news'}
+              className={`${pathName === '/news' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               News
             </Link>
-          </li>
-        </ul>
-      </div>
-      <div className="navbar-end">
-        <button className="btn btn-circle btn-ghost">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </button>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <button className="btn btn-ghost">Newsletter</button>
-            </li>
-            <li>
-              <button className="btn btn-ghost">SignIn</button>
-            </li>
-            <li>
-              <details>
-                <summary>Lang</summary>
-                <ul className="p-2">
-                  <li>
-                    <button className="btn btn-ghost">Eng</button>
-                  </li>
-                  <li>
-                    <button className="btn btn-ghost">Arabic</button>
-                  </li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-        </div>
-        <button className="btn btn-circle btn-ghost">
-          <div className="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              />
-            </svg>
-            <span className="badge indicator-item badge-primary badge-xs"></span>
           </div>
-        </button>
+
+          {/*buttons right*/}
+          <div
+            className={
+              'my-auto flex flex-row items-center justify-center gap-x-5'
+            }>
+            {/*signin / logout button here*/}
+            <Button
+              itemComponents={<p>Sign In</p>}
+              handle={handleSignInButtonClick}
+            />
+            {/*language chooser button here*/}
+            <Button
+              itemComponents={
+                <>
+                  <p>Eng</p>
+                  <Image
+                    src={'/icons/keyboard_arrow_down.png'}
+                    alt={'arrow down'}
+                    width={20}
+                    height={20}
+                  />
+                </>
+              }
+              handle={handleLanguageButtonClick}
+            />
+            {/*Profile button here*/}
+            <div
+              className={'rounded-full bg-accent p-2'}
+              onClick={handleProfileButtonClick}>
+              <Image
+                src={'/icons/person.png'}
+                alt={'pfp pic'}
+                width={30}
+                height={30}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/*drop down of profile click*/}
+        <div
+          className={`${profilePicClicked ? 'block' : 'hidden'} absolute right-0 top-16 mt-1 flex flex-row justify-end bg-transparent ${rubikSemiBold.variable} font-rubik`}>
+          <div className={'flex w-full flex-col rounded-bl-2xl text-opposite'}>
+            <Button
+              style={
+                'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2'
+              }
+              itemComponents={
+                <>
+                  <p>Account</p>{' '}
+                  <Image
+                    src={'/icons/person.png'}
+                    alt={'person image'}
+                    width={20}
+                    height={20}
+                  />
+                </>
+              }
+              handle={handleAccountClick}
+            />
+
+            <Button
+              style={
+                'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2'
+              }
+              itemComponents={
+                <>
+                  <p>Dark mode</p>{' '}
+                  <Image
+                    src={'/icons/person.png'}
+                    alt={'person image'}
+                    width={20}
+                    height={20}
+                  />
+                </>
+              }
+              handle={handleDarkModeClick}
+            />
+
+            <Button
+              style={
+                'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2'
+              }
+              itemComponents={
+                <>
+                  <p>Contact us</p>{' '}
+                  <Image
+                    src={'/icons/person.png'}
+                    alt={'person image'}
+                    width={20}
+                    height={20}
+                  />
+                </>
+              }
+              handle={handleContactUsClick}
+            />
+
+            <Button
+              style={
+                'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2 rounded-bl-2xl'
+              }
+              itemComponents={
+                <>
+                  <p>About us</p>{' '}
+                  <Image
+                    src={'/icons/person.png'}
+                    alt={'person image'}
+                    width={20}
+                    height={20}
+                  />
+                </>
+              }
+              handle={handleAboutUsClick}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

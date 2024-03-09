@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     container: {
@@ -19,15 +19,17 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: '#0C0B2D',
-        secondary: '#FFFFFF',
-        accent: '#3997EE',
-        pinkish: '#C80CD2',
+        primary: '#55EF43',
+        secondary: '#F06E30',
+        accent: '#F5F4F4',
+        page: '#FFFFFF',
+        opposite: '#10101F',
       },
       backgroundImage: {
         space: 'url("/bg-explosion.jpeg")',
         site: 'url("/site-bg.svg")',
         sitePng: 'url("/svg-bg.png")',
+        logo: 'url("/W4Kitchen.png)',
       },
       animation: {
         'spin-slow': 'spin 10s linear infinite',
@@ -45,6 +47,5 @@ module.exports = {
       DEFAULT: '15px',
     },
   },
-  plugins:
-    [require('daisyui'),require('tailwind-scrollbar')],
+  plugins: [require('daisyui'), require('tailwind-scrollbar')],
 }
