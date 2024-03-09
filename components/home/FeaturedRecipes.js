@@ -2,89 +2,41 @@
 //font import
 import {Rubik} from 'next/font/google'
 
+//This is just a demo of how the format of the json file should be returned
+//in the API
 const workSliderData = {
   slides: [
     {
-      images: [
+      recipes: [
         {
-          title: 'Portfolio Website',
+          id: 45,
+          title: 'Lasagna souflet',
+          stars: 3,
+
           path: '/strawberryCake.png',
-          languages: ['Next.js', 'Tailwind CSS'],
+          criteria: ['45 mins', 4, 'intermediate'],
           description:
-            'A portfolio website made through Next.js framework with tailwind CSS library implementation for each of styling and animating.',
-          link: 'https://github.com/HyperJAK/Portfolio',
+            'This is the ultra deluxe recipe of the celestial realm made using the most exquisite ingredients and most love!',
         },
         {
-          title: 'Trip Booking Website',
+          id: 45,
+          title: 'Lasagna souflet',
+          stars: 3,
+
           path: '/strawberryCake.png',
-          languages: ['React.js', 'Node.js', 'MySQL'],
+          criteria: ['45 mins', 4, 'intermediate'],
           description:
-            'An end-to-end app that allows users to book flights and hotels through web. Developed a separate Node.js backend application using Node.js connected to MySQL database. Also Implemented a robust user management system to authenticate users.',
-          link: 'https://github.com/HyperJAK/MobileDevFinalProj-reactjs.git',
+            'This is the ultra deluxe recipe of the celestial realm made using the most exquisite ingredients and most love!',
         },
         {
-          title: 'Trip Booking app',
+          id: 45,
+          title: 'Lasagna souflet',
+          stars: 3,
+
           path: '/strawberryCake.png',
-          languages: ['React Native', 'Node.js', 'MySQL'],
+          criteria: ['45 mins', 4, 'intermediate'],
           description:
-            'An end-to-end app that allows users to book flights and hotels through mobile. Developed a separate Node.js backend application using Node.js connected to MySQL database. Also Implemented a robust user management system to authenticate users.',
-          link: 'https://github.com/HyperJAK/MobileDevFinalProj-reactNative.git',
-        },
-        {
-          title: 'Car Dealership',
-          path: '/strawberryCake.png',
-          languages: ['JavaFX', 'MySQL'],
-          description:
-            'A car dealership UI application, connected to a local MySQL database. ',
-          link: 'https://github.com/HyperJAK/CarDealership-Maven-Runnable.git',
-        },
-      ],
-    },
-    {
-      images: [
-        {
-          title: 'Security Testing',
-          path: '/strawberryCake.png',
-          languages: ['React.js', 'Node.js', 'MySQL'],
-          description:
-            'Small website made for the purpose of implementing and testing security measures like: Authentication, Email otp, Database sensitive data encryption using AES 256 algorithm, Not robot verification, Duplicate Image detection by hash etc..',
-          link: 'https://github.com/HyperJAK/CompSecFinalProj.git',
-        },
-        {
-          title: 'Music Player',
-          path: '/strawberryCake.png',
-          languages: ['C#'],
-          description:
-            'A music player that plays your local music using public C# library.',
-          link: 'https://github.com/HyperJAK/Music-Player-CSharp.git',
-        },
-        {
-          title: 'AI Rock Paper Scissors',
-          path: '/strawberryCake.png',
-          languages: ['Python'],
-          description:
-            'A hand tracking AI app that recognizes the form of your hand, has the ability to detect two hands playing rock paper scissors and score the winner each.',
-          link: 'https://github.com/PeekMe01/AIFingerCountingProject',
-        },
-        {
-          title: 'Youtube Downloader',
-          path: '/strawberryCake.png',
-          languages: ['Python'],
-          description:
-            'A Python GUI app that uses a public library to download YouTube music, videos and playlists.',
-          link: 'https://github.com/HyperJAK/Youtube-Downloader',
-        },
-      ],
-    },
-    {
-      images: [
-        {
-          title: 'UX-UI W4Kitchen cooking',
-          path: '/strawberryCake.png',
-          languages: ['Figma'],
-          description:
-            'A Figma design of a cooking website and mobile application.',
-          link: 'https://www.figma.com/file/7Ki5oDpHGewYVtXTnNBfpy/UI%2FUX-Design-Project-Sketches?node-id=0-1&t=ox3GwJIeYkUgUGUw-0',
+            'This is the ultra deluxe recipe of the celestial realm made using the most exquisite ingredients and most love!',
         },
       ],
     },
@@ -129,9 +81,9 @@ const FeaturedRecipes = () => {
   return (
     <div
       className={
-        'z-50 flex w-full flex-row flex-wrap items-center justify-center sm:gap-20 xl:gap-60'
+        'relative z-50 flex w-full flex-row flex-wrap items-center justify-between bg-page pb-[120px] pl-40 pr-40 pt-[120px] text-opposite'
       }>
-      <div className={'items-center self-center'}>
+      <div className={'z-20 items-center self-center'}>
         {/*Catchphrase*/}
         <p
           className={`${rubikBold.variable} text-center font-rubik text-[4rem] text-opposite`}>
@@ -140,6 +92,18 @@ const FeaturedRecipes = () => {
           <span className={'text-secondary'}>You</span>
         </p>
       </div>
+
+      {/*Image div*/}
+      <div className={'absolute left-0 top-0 z-10'}>
+        <Image
+          src={'/ellipseGreen.png'}
+          alt={'rabbit image'}
+          width={500}
+          height={500}
+          className={'rounded-2xl'}
+        />
+      </div>
+
       <div className={'w-[50%]'}>
         <Swiper
           spaceBetween={10}
@@ -151,11 +115,11 @@ const FeaturedRecipes = () => {
             prevEl: '.swiper-button-prev',
           }}
           modules={[Navigation, Pagination]}
-          className={''}>
+          className={'h-[650px]'}>
           <div className="swiper-button-next"></div>
           <div className="swiper-button-prev"></div>
           {workSliderData.slides.map((slide, index) => {
-            return slide.images.map((image, index) => {
+            return slide.recipes.map((recipe, index) => {
               return (
                 <SwiperSlide key={index}>
                   <div
@@ -168,7 +132,7 @@ const FeaturedRecipes = () => {
                       }>
                       {/*Image*/}
                       <Image
-                        src={image.path}
+                        src={recipe.path}
                         width={400}
                         height={100}
                         alt={''}
@@ -181,7 +145,7 @@ const FeaturedRecipes = () => {
                         className={
                           'flex flex-row flex-nowrap justify-center gap-x-2'
                         }>
-                        {image.languages.map((language, index) => {
+                        {recipe.criteria.map((language, index) => {
                           return (
                             <div
                               key={index}
@@ -193,16 +157,16 @@ const FeaturedRecipes = () => {
                       </div>
                       <div
                         className={`p-6 ${rubikRegular.variable} m-15 text-center font-rubik text-[11px] lg:text-[15px]`}>
-                        {image.description}
+                        {recipe.description}
                       </div>
                       <a
-                        href={image.link}
+                        href={recipe.link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={
-                          'hover:border-pinkish mb-10 rounded-2xl border-2 border-accent bg-opacity-30 p-2 transition-all duration-300 hover:border-8'
+                          'hover:border-pinkish mb-10 rounded-2xl border-2 border-secondary bg-opacity-30 p-2 transition-all duration-300 hover:cursor-pointer hover:border-8'
                         }>
-                        GitHub
+                        View Recipe
                       </a>
                     </div>
                   </div>
