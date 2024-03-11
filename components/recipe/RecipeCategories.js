@@ -93,7 +93,7 @@ const RecipeCategories = () => {
     <>
       <div
         className={
-          'bg-recipeCategoriesImg relative z-50 flex w-full flex-col flex-wrap items-center justify-between gap-20 bg-cover bg-no-repeat pb-[120px] pl-40 pr-40 pt-[60px]'
+          'bg-recipeCategoriesImg relative z-50 flex w-full flex-col flex-wrap items-center justify-between gap-20 bg-cover bg-no-repeat pb-[50px] pl-40 pr-40 pt-[50px]'
         }>
         {/*Title*/}
         <div

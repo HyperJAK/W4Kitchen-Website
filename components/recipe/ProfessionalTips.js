@@ -50,7 +50,7 @@ const ProfessionalTips = () => {
     <>
       <div
         className={
-          'relative z-50 flex w-full flex-row flex-wrap items-center justify-center gap-40 pb-[120px] pt-[60px]'
+          'relative z-50 flex w-full flex-row flex-wrap items-center justify-center gap-40 pb-[50px] pt-[50px]'
         }>
         {/*Title and chef image and button div*/}
         <div className={'flex flex-col'}>
