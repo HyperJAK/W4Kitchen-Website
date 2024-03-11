@@ -29,7 +29,8 @@ module.exports = {
         space: 'url("/bg-explosion.jpeg")',
         site: 'url("/site-bg.svg")',
         sitePng: 'url("/svg-bg.png")',
-        logo: 'url("/W4Kitchen.png)',
+        logo: 'url("/W4Kitchen.png")',
+        recipeCategoriesImg: 'url("/recipeCategories.png")',
       },
       animation: {
         'spin-slow': 'spin 10s linear infinite',
