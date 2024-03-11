@@ -58,8 +58,8 @@ const Quote = () => {
           <Image
             src={'/teacherBunny.png'}
             alt={'rabbit image'}
-            width={500}
-            height={500}
+            width={400}
+            height={400}
             className={'rounded-2xl'}
           />
         </div>

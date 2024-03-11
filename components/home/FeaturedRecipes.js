@@ -81,7 +81,7 @@ const FeaturedRecipes = () => {
   return (
     <div
       className={
-        'relative z-50 flex w-full flex-row flex-wrap items-center justify-between bg-page pb-[120px] pl-40 pr-40 pt-[120px] text-opposite'
+        'relative z-50 flex w-full flex-row flex-wrap items-center justify-center gap-60 bg-page pb-[120px] pl-40 pr-40 pt-[120px] text-opposite'
       }>
       <div className={'z-20 items-center self-center'}>
         {/*Catchphrase*/}

@@ -89,7 +89,7 @@ const Nav = () => {
 
   return (
     <>
-      <div className={'z-50 mb-[150px] flex flex-col'}>
+      <div className={'z-50 flex flex-col'}>
         {/*Normal nav*/}
         <div
           className={
