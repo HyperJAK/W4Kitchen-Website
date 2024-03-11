@@ -102,7 +102,7 @@ const RecipeCategories = () => {
         </div>
         {/*Categories container*/}
         <div
-          className={`flex flex-row flex-nowrap gap-10 text-black ${rubikSemiBold.variable} w-[80%] items-center justify-center text-center align-middle font-rubik`}>
+          className={`flex flex-row flex-nowrap gap-10 text-opposite ${rubikSemiBold.variable} w-[80%] items-center justify-center text-center align-middle font-rubik`}>
           {/*Diets*/}
           {CategoriesData.categories.map((category) => {
             return (
@@ -120,7 +120,7 @@ const RecipeCategories = () => {
                           {/*replace this href with actual road for the specific category*/}
                           <Button
                             style={
-                              'justify-center flex flex-row text-black hover:text-white border-solid border-secondary border-2 bg-accent/40 p-7 hover:bg-secondary  hover:cursor-pointer flex-row flex rounded-2xl'
+                              'justify-center flex flex-row text-opposite hover:text-page border-solid border-secondary border-2 bg-accent/40 p-7 hover:bg-secondary  hover:cursor-pointer flex-row flex rounded-2xl'
                             }
                             itemComponents={<p>{subCat.name}</p>}
                             handle={handleButtonClick}
