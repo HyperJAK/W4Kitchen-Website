@@ -188,23 +188,26 @@ const Nav = () => {
         <div
           className={`${profilePicClicked ? 'block' : 'hidden'} absolute right-0 top-16 mt-1 flex flex-row justify-end bg-transparent ${rubikSemiBold.variable} font-rubik`}>
           <div className={'flex w-full flex-col rounded-bl-2xl text-opposite'}>
-            <Button
-              style={
-                'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2'
-              }
-              itemComponents={
-                <>
-                  <p>Account</p>{' '}
-                  <Image
-                    src={'/icons/person.png'}
-                    alt={'person image'}
-                    width={20}
-                    height={20}
-                  />
-                </>
-              }
-              handle={handleAccountClick}
-            />
+            <Link
+              href={'/profile'}
+              onClick={handleProfileButtonClick}>
+              <Button
+                style={
+                  'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2'
+                }
+                itemComponents={
+                  <>
+                    <p>Account</p>{' '}
+                    <Image
+                      src={'/icons/person.png'}
+                      alt={'person image'}
+                      width={20}
+                      height={20}
+                    />
+                  </>
+                }
+              />
+            </Link>
 
             <Button
               style={
@@ -224,41 +227,49 @@ const Nav = () => {
               handle={handleDarkModeClick}
             />
 
-            <Button
-              style={
-                'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2'
-              }
-              itemComponents={
-                <>
-                  <p>Contact us</p>{' '}
-                  <Image
-                    src={'/icons/person.png'}
-                    alt={'person image'}
-                    width={20}
-                    height={20}
-                  />
-                </>
-              }
-              handle={handleContactUsClick}
-            />
+            <Link
+              href={'/contactUs'}
+              onClick={handleProfileButtonClick}>
+              <Button
+                style={
+                  'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2'
+                }
+                itemComponents={
+                  <>
+                    <p>Contact us</p>{' '}
+                    <Image
+                      src={'/icons/person.png'}
+                      alt={'person image'}
+                      width={20}
+                      height={20}
+                    />
+                  </>
+                }
+                handle={handleContactUsClick}
+              />
+            </Link>
 
-            <Button
-              style={
-                'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2 rounded-bl-2xl'
-              }
-              itemComponents={
-                <>
-                  <p>About us</p>{' '}
-                  <Image
-                    src={'/icons/person.png'}
-                    alt={'person image'}
-                    width={20}
-                    height={20}
-                  />
-                </>
-              }
-              handle={handleAboutUsClick}
-            />
+            <Link
+              href={'/aboutUs'}
+              onClick={handleProfileButtonClick}>
+              <Button
+                style={
+                  'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2 rounded-bl-2xl'
+                }
+                itemComponents={
+                  <>
+                    <p>About us</p>{' '}
+                    <Image
+                      src={'/icons/person.png'}
+                      alt={'person image'}
+                      width={20}
+                      height={20}
+                    />
+                  </>
+                }
+                handle={handleAboutUsClick}
+              />
+            </Link>
           </div>
         </div>
       </div>
