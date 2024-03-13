@@ -31,6 +31,7 @@ module.exports = {
         sitePng: 'url("/svg-bg.png")',
         logo: 'url("/W4Kitchen.png")',
         recipeCategoriesImg: 'url("/recipeCategories.png")',
+        profileMainImg: 'url("/profilePicMain.png")',
       },
       animation: {
         'spin-slow': 'spin 10s linear infinite',
