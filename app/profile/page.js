@@ -11,10 +11,10 @@ export default function Profile() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const uId = 1 // Example user ID, you can assign it dynamically
+        const uId = 1
         const response = await fetch(
           `http://localhost:3000/api/profile?id=${uId}`
-        ) // Pass the user ID as a query parameter
+        )
         const data = await response.json()
         setUserData(data)
       } catch (error) {
