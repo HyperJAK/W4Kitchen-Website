@@ -35,7 +35,7 @@ const RecipeSearch = () => {
       {/*Main components parent*/}
       <div
         className={
-          'z-50 flex w-full flex-row flex-wrap items-center justify-center gap-60 pl-40 pr-40'
+          'z-50 mt-[200px] flex w-full flex-row flex-wrap items-center justify-center gap-60 pl-40 pr-40'
         }>
         {/*Catchphrase and search textfield*/}
         <div className={'flex w-[775px] flex-col items-center justify-center'}>
