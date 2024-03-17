@@ -55,6 +55,7 @@ const Nav = () => {
   const [signInEnabled, setSignInEnabled] = useState(false)
   const [languageClicked, setLanguageClicked] = useState(false)
   const [profilePicClicked, setProfilePicClicked] = useState(false)
+  const [id, setId] = useState(1)
 
   const handleSignInButtonClick = () => {
     setSignInEnabled(!signInEnabled)
@@ -189,7 +190,8 @@ const Nav = () => {
           className={`${profilePicClicked ? 'block' : 'hidden'} absolute right-0 top-16 mt-1 flex flex-row justify-end bg-transparent ${rubikSemiBold.variable} font-rubik`}>
           <div className={'flex w-full flex-col rounded-bl-2xl text-opposite'}>
             <Link
-              href={'/profile'}
+              href={`/profile?id=${id}`}
+              as={`/profile/${id}`}
               onClick={handleProfileButtonClick}>
               <Button
                 style={
