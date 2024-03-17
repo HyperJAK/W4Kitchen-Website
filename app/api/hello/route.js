@@ -7,12 +7,12 @@ export async function GET(req, res) {
     const connection = await pool.getConnection()
 
     // Replace with your actual query to fetch data
-    const [data] = await connection.query('SELECT * FROM user')
+    const [data] = await connection.query('SELECT email FROM user')
 
     // Release the connection back to the pool
     await connection.release()
 
-    return NextResponse.json(data)
+    return NextResponse.json(data, {status: 200})
   } catch (error) {
     console.error(error)
     return NextResponse.json({message: 'Failed to fetch data'})
