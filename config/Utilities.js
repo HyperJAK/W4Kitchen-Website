@@ -63,55 +63,16 @@ export function ValidEmail(email) {
   return emailRegex.test(email)
 }
 
-export async function SignInFunc(userInfo, setUser) {
+export async function SignInFunc({email, encrypted_password}) {
   try {
-    const response =
-      null /*await axios.post('http://localhost:4000/login', userInfo)*/
-
-    const dbMail = response.data.data.email
-    const decryptedDbPass = await DecryptPassword(response.data.data.password)
-    const decryptedLocalPass = await DecryptPassword(userInfo.encryptedPass)
-
-    if (decryptedDbPass === decryptedLocalPass && dbMail === userInfo.email) {
-      const profilePicData = response.data.data.profilePic
-
-      const blob = new Blob([Buffer.from(profilePicData, 'base64')], {
-        type: 'image/png',
-      })
-
-      const imageUrl = URL.createObjectURL(blob)
-
-      console.log(imageUrl)
-
-      console.log('RESPONSESSSS')
-      console.log(response.data.data)
-
-      setUser((prevUser) => ({
-        ...prevUser,
-        id: response.data.data.id,
-        username: response.data.data.username,
-        email: response.data.data.email,
-        password: response.data.data.password,
-        profilePic: imageUrl,
-      }))
-
-      console.log(response.data.message)
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export async function SignUpFunc(userInfo, setUser, {params}) {
-  try {
-    const response = await fetch('http://localhost:3000/api/login', {
+    const response = await fetch('http://localhost:3000/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: params.email,
-        encrypted_password: params.encrypted_password,
+        email: email,
+        password: encrypted_password,
       }),
     })
 
@@ -120,12 +81,33 @@ export async function SignUpFunc(userInfo, setUser, {params}) {
     //console.log("RESPONSESSSS")
     //console.log(response.data.data)
 
-    setUser((prevUser) => ({
-      ...prevUser,
-      data,
-    }))
+    console.log(data.message)
+  } catch (error) {
+    //alert(error.response.data.error);
+    console.log(error)
+  }
+}
 
-    console.log(response.data.message)
+export async function SignUpFunc({email, encrypted_password}) {
+  try {
+    const response = await fetch('http://localhost:3000/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        username: 'Testing',
+        password: encrypted_password,
+      }),
+    })
+
+    const data = await response.json()
+
+    //console.log("RESPONSESSSS")
+    //console.log(response.data.data)
+
+    console.log(data.message)
   } catch (error) {
     //alert(error.response.data.error);
     console.log(error)

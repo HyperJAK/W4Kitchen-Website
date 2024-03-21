@@ -30,6 +30,7 @@ import Image from 'next/image'
 import {Rubik} from 'next/font/google'
 import Button from '@/components/shared/Button'
 import {useState} from 'react'
+import SignUp from '@/components/shared/Validation/SignUp'
 
 const rubikRegular = Rubik({
   subsets: ['latin'],
@@ -52,13 +53,13 @@ const rubikSemiBold = Rubik({
 const Nav = () => {
   const pathName = usePathname()
 
-  const [signInEnabled, setSignInEnabled] = useState(false)
   const [languageClicked, setLanguageClicked] = useState(false)
   const [profilePicClicked, setProfilePicClicked] = useState(false)
   const [id, setId] = useState(1)
+  const [showAuth, setShowAuth] = useState(false)
 
   const handleSignInButtonClick = () => {
-    setSignInEnabled(!signInEnabled)
+    setShowAuth(!showAuth)
     console.log('clicked')
     //handle other things when sign in clicked
   }
@@ -275,6 +276,7 @@ const Nav = () => {
           </div>
         </div>
       </div>
+      {showAuth ? <SignUp /> : ''}
     </>
   )
 }

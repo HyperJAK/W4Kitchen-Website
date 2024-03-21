@@ -11,10 +11,9 @@ export default function Recipes() {
         className={
           'relative z-30 flex h-auto flex-col justify-center gap-y-[150px]'
         }>
-        {/*All recipe page features*/}
-
         <RecipeCategories />
         <ProfessionalTips />
+        <p>Hello testing</p>
       </main>
     </>
   )
