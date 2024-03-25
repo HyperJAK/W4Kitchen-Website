@@ -13,6 +13,7 @@
     "@next/font": "^14.1.0",
     "crypto-js": "^4.2.0",
     "framer-motion": "^11.0.5",
+    "jshashes": "^1.0.8",
     "mysql2": "^3.9.2",
     "next": "14.1.0",
     "node": "^21.6.2",
