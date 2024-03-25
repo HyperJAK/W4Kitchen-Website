@@ -1,45 +1,82 @@
 import {useState} from 'react'
-import {
-  Button,
-  Container,
-  Row,
-  Col,
-  Card,
-  Form,
-  FloatingLabel,
-} from 'react-bootstrap'
-import EmailAndPass from './EmailAndPass'
+
 import {
   ValidEmail,
   ValidPassword,
   SignUpFunc,
   EncryptPassword,
+  ValidUsername,
+  HashPassword,
 } from '@/config/Utilities'
+import EmailButton from '@/components/shared/Validation/EmailButton'
+import PasswordButton from '@/components/shared/Validation/PasswordButton'
+import Button from '@/components/shared/Button'
+import Link from 'next/link'
+import Title from '@/components/shared/Title'
+import Image from 'next/image'
+import {Rubik} from 'next/font/google'
+
+const rubikBold = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+  weight: ['700'],
+})
 
 const SignUp = () => {
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [cPassword, setCPass] = useState('')
   const [isHovered, setIsHovered] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
 
   const handleSignup = async (e) => {
     e.preventDefault()
 
     if (
+      ValidUsername(username) &&
       ValidEmail(email) &&
       ValidPassword(password) &&
       password === cPassword
     ) {
-      const encryptedPass = await EncryptPassword(password)
-
+      console.log('Passed validation')
       try {
-        // Assuming setUser and setCurrentScreen are defined elsewhere
-        await SignUpFunc({email, encryptedPass})
+        console.log('Password (before hashing):', password)
+
+        const hashedPass = await HashPassword({password})
+
+        console.log('Password (after hashing): ' + hashedPass)
+
+        try {
+          // Assuming setUser and setCurrentScreen are defined elsewhere
+          await SignUpFunc({email, password: hashedPass, username})
+          console.log('Signup successful!') // Log success for debugging
+        } catch (error) {
+          // Handle specific errors (if possible)
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.error
+          ) {
+            alert(error.response.data.error) // Display specific error message
+          } else {
+            alert('An unexpected error occurred. Please try again later.') // Generic error message
+          }
+          console.error('Signup failed:', error) // Log the entire error for debugging
+        }
       } catch (error) {
-        alert(error.response.data.error)
+        console.error('Error encrypting password:', error) // Log encryption error
+        alert(
+          'An unexpected error occurred during signup. Please try again later.'
+        ) // Generic error message
       }
     } else {
-      // Handle invalid form data
+      // Handle invalid form data (improve error messages as needed)
+      alert('Please enter valid username, email, and password.')
     }
   }
 
@@ -47,122 +84,111 @@ const SignUp = () => {
     e.preventDefault()
   }
 
-  const button_style = {
-    width: '100%',
-    marginTop: '15px',
-    borderRadius: '30px',
-    height: '60px',
-    color: 'white',
-    backgroundColor: isHovered ? '#00008B' : '#0074D9',
-  }
-
   return (
-    <section
-      style={{
-        backgroundColor: '#a8d2f0',
-        backgroundSize: 'cover',
-        height: '100vh',
-        overflow: 'auto',
-      }}>
-      <Container className="h-100 py-5">
-        <Row className="d-flex justify-content-center align-items-center h-100">
-          <Col xl={10}>
-            <Card style={{borderRadius: '1rem'}}>
-              <Row className="g-0">
-                <Col
-                  md={6}
-                  lg={5}
-                  className="d-none d-md-block">
-                  <Card.Img
-                    src={''}
-                    alt="login form"
-                    className="img-fluid"
-                    style={{borderRadius: '1rem 0 0 1rem', height: '700'}}
-                  />
-                </Col>
-                <Col
-                  md={6}
-                  lg={7}
-                  className="d-flex align-items-center">
-                  <Card.Body className="p-lg-5 p-4 text-black">
-                    <form>
-                      <div className="d-flex align-items-center mb-3 pb-1">
-                        <span className="h1 fw-bold mb-0">Sign Up</span>
-                      </div>
-                      <h5
-                        className="fw-normal mb-3 pb-3"
-                        style={{letterSpacing: '1px'}}>
-                        Create an account
-                      </h5>
-                      <div className="form-outline mb-4">
-                        <EmailAndPass
-                          props={{email, password, setEmail, setPassword}}
-                        />
-                        <FloatingLabel
-                          controlId="floatingPassword"
-                          label="Confirm Password">
-                          <Form.Control
-                            style={{
-                              border:
-                                cPassword === password
-                                  ? '1px solid black'
-                                  : '1px solid red',
-                              marginTop: '20px',
-                            }}
-                            type="password"
-                            placeholder="Confirm Password"
-                            value={cPassword}
-                            onChange={(e) => {
-                              if (e.target.value.length < 50) {
-                                setCPass(e.target.value)
-                              }
-                            }}
-                          />
-                        </FloatingLabel>
-                      </div>
-                      <div className="mb-4 pt-1">
-                        <Button
-                          style={button_style}
-                          variant="dark"
-                          size="lg"
-                          onMouseEnter={() => setIsHovered(true)}
-                          onMouseLeave={() => setIsHovered(false)}
-                          onClick={handleSignup}>
-                          SignUp
-                        </Button>
-                      </div>
-                      <a href="/api/auth/login">
-                        Click me to use auth to login !!!
-                      </a>
-                      <p
-                        className="pb-lg-2 mb-5"
-                        style={{color: 'rgba(52, 52, 52, 0.8)'}}>
-                        Already have an account?{' '}
-                        <a
-                          id={'signIn_link'}
-                          onClick={handleRegistring}>
-                          Sign In
-                        </a>
-                      </p>
-                      <a
-                        href="#!"
-                        className="small text-muted">
-                        Terms of use.
-                      </a>
-                      <a
-                        href="#!"
-                        className="small text-muted">
-                        Privacy policy
-                      </a>
-                    </form>
-                  </Card.Body>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+    <div
+      className={
+        'relative flex flex-col items-center justify-center gap-10 rounded-2xl border-2 border-secondary bg-page p-6 align-middle'
+      }>
+      <div className={'absolute bottom-0 right-0'}>
+        <Image
+          src={'/signup.png'}
+          alt={'sign up'}
+          width={200}
+          height={200}
+        />
+      </div>
+
+      {/*Title here*/}
+      <div className={'flex flex-row self-center'}>
+        <p
+          className={`${rubikBold.variable} font-rubik text-[30px] text-opposite`}>
+          <span className={'text-secondary'}>S</span>ign
+          <span className={'text-secondary'}> u</span>p
+        </p>
+      </div>
+      {/*Buttons and textfields here*/}
+      <div className={'flex flex-col gap-4'}>
+        {/*Username textfield here*/}
+        <EmailButton
+          props={{email: username, setEmail: setUsername, title: 'Username'}}
+        />
+        {/*Email + small info p under*/}
+        <div className={'flex flex-col'}>
+          <EmailButton props={{email: email, setEmail: setEmail}} />
+          <p>You can use letters, numbers and periods</p>
+        </div>
+        {/*Password + confirm password + p info*/}
+        <div className={'flex flex-col'}>
+          <div className={'flex flex-row gap-2'}>
+            <PasswordButton
+              props={{
+                password: password,
+                setPassword: setPassword,
+                showPassword: showPassword,
+              }}
+            />
+            <PasswordButton
+              props={{
+                password: cPassword,
+                setPassword: setCPass,
+                title: 'Confirm password',
+                showPassword: showPassword,
+              }}
+            />
+          </div>
+          <p>
+            Use 8 or more characters with a mix of letters, numbers & symbols
+          </p>
+        </div>
+        {/*Show password checkbox*/}
+        <div>
+          <span className="mr-2">Show Password</span>
+          <input
+            type="checkbox"
+            id="show-password"
+            name="show-password"
+            className="focus:ring-none h-4 w-4 rounded border border-gray-300 bg-white accent-blue-600 focus:ring-blue-500"
+            checked={showPassword}
+            onChange={handleShowPassword}
+          />
+        </div>
+        {/*Sign up button*/}
+        <Button
+          style={
+            'justify-center w-50 flex flex-row border-solid border-secondary border-2 bg-secondary p-4 hover:bg-accent hover:cursor-pointer flex-row flex text-page rounded-2xl hover:text-opposite'
+          }
+          itemComponents={<p>Sign Up</p>}
+          handle={handleSignup}
+        />
+        {/*External logins and pic here*/}
+        <Link href={'/api/auth/login'}>
+          <Button
+            style={
+              'justify-center w-50 flex flex-row border-solid border-secondary border-2 bg-white p-4 hover:bg-secondary hover:cursor-pointer flex-row flex text-opposite rounded-2xl hover:text-accent'
+            }
+            itemComponents={
+              <>
+                <p>Icon</p> <p> External Registration</p>
+              </>
+            }
+            handle={''}
+          />
+        </Link>
+
+        {/*Sign ip button and text*/}
+        <div
+          className={'flex flex-row flex-wrap items-center justify-end gap-4'}>
+          <p>Already have an account ?</p>
+          <Button
+            style={
+              'justify-center w-50 flex flex-row border-solid border-secondary border-2 bg-opposite p-4 hover:bg-accent hover:cursor-pointer flex-row flex text-page rounded-2xl hover:text-opposite'
+            }
+            itemComponents={<p>Sign In</p>}
+            handle={''}
+          />
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -10,7 +10,7 @@ export async function POST(req, res) {
     const {email, username, password} = bodyData
 
     //just for testing, later on remove it and encrypt directly after user enters password
-    const encryptedKey = await EncryptPassword(password)
+    /*const encryptedKey = await EncryptPassword(password)*/
 
     // Now you can access email, password, and decryptedKey here and perform necessary operations
 
@@ -19,7 +19,7 @@ export async function POST(req, res) {
     const connection = await pool.getConnection()
     const [data] = await connection.query(
       'INSERT INTO user (email, username, password, registration_date) VALUES (?, ?, ?, ?)',
-      [email, username, encryptedKey, currentDate]
+      [email, username, password, currentDate]
     )
 
     await connection.release()

@@ -7,16 +7,34 @@ export function ValidAlphaInput(input) {
   return isValid
 }
 
-export async function EncryptPassword(pass) {
+export async function EncryptPassword({password}) {
   const encryptionKey = process.env.REACT_APP_ENCRYPTION_KEY
 
-  const plaintext = pass
+  const plaintext = password
   const secretKey = encryptionKey
 
-  // Encrypt id
-  const ciphertext = await AES.encrypt(plaintext, secretKey).toString()
+  console.log('Pass to encrypt: ' + password)
 
-  return ciphertext
+  // Encrypt id
+  try {
+    const encPass = await AES.encrypt(plaintext, secretKey).toString()
+    console.log('Passed encryption with pass: ' + encPass)
+    return encPass
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function HashPassword({password}) {
+  const Hashes = require('jshashes')
+  try {
+    // Hash password using SHA-256
+    const SHA256 = new Hashes.SHA256().hex(password)
+    return SHA256
+  } catch (error) {
+    console.error('Error hashing password with jshashes:', error)
+    throw error
+  }
 }
 
 export async function DecryptPassword(pass) {
@@ -63,6 +81,17 @@ export function ValidEmail(email) {
   return emailRegex.test(email)
 }
 
+export function ValidUsername(username) {
+  if (username === '') {
+    return false
+  }
+  if (username.length < 3 || username.length > 20) {
+    return false
+  }
+
+  return true
+}
+
 export async function SignInFunc({email, encrypted_password}) {
   try {
     const response = await fetch('http://localhost:3000/api/signin', {
@@ -88,8 +117,9 @@ export async function SignInFunc({email, encrypted_password}) {
   }
 }
 
-export async function SignUpFunc({email, encrypted_password}) {
+export async function SignUpFunc({email, password, username}) {
   try {
+    console.log('Entered signup func')
     const response = await fetch('http://localhost:3000/api/signup', {
       method: 'POST',
       headers: {
@@ -97,8 +127,8 @@ export async function SignUpFunc({email, encrypted_password}) {
       },
       body: JSON.stringify({
         email: email,
-        username: 'Testing',
-        password: encrypted_password,
+        username: username,
+        password: password,
       }),
     })
 
