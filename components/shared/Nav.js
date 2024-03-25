@@ -31,6 +31,7 @@ import {Rubik} from 'next/font/google'
 import Button from '@/components/shared/Button'
 import {useState} from 'react'
 import SignUp from '@/components/shared/Validation/SignUp'
+import Title from '@/components/shared/Title'
 
 const rubikRegular = Rubik({
   subsets: ['latin'],
@@ -105,11 +106,7 @@ const Nav = () => {
             width={'213'}
             height={'43'}
           />*/}
-            <p
-              className={`${rubikBold.variable} font-rubik text-[30px] text-opposite`}>
-              W<span className={'text-secondary'}>4</span>Kitchen
-              <span className={'text-secondary'}>.</span>
-            </p>
+            <Title />
           </div>
 
           {/*IMP !!!!!!!!! change font to rubik same as design*/}
