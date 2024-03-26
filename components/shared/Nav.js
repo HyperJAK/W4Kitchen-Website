@@ -32,6 +32,7 @@ import Button from '@/components/shared/Button'
 import {useState} from 'react'
 import SignUp from '@/components/shared/Validation/SignUp'
 import Title from '@/components/shared/Title'
+import SignIn from '@/components/shared/Validation/SignIn'
 
 const rubikRegular = Rubik({
   subsets: ['latin'],
@@ -58,6 +59,8 @@ const Nav = () => {
   const [profilePicClicked, setProfilePicClicked] = useState(false)
   const [id, setId] = useState(1)
   const [showAuth, setShowAuth] = useState(false)
+
+  const [showSignIn, setShowSignIn] = useState(false)
 
   const handleSignInButtonClick = () => {
     setShowAuth(!showAuth)
@@ -273,7 +276,8 @@ const Nav = () => {
           </div>
         </div>
       </div>
-      {showAuth ? <SignUp /> : ''}
+      {showAuth && !showSignIn ? <SignUp setShowSignIn={setShowSignIn} /> : ''}
+      {showAuth && showSignIn ? <SignIn setShowSignIn={setShowSignIn} /> : ''}
     </>
   )
 }

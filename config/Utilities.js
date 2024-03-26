@@ -92,7 +92,7 @@ export function ValidUsername(username) {
   return true
 }
 
-export async function SignInFunc({email, encrypted_password}) {
+export async function SignInFunc({email, password}) {
   try {
     const response = await fetch('http://localhost:3000/api/signin', {
       method: 'POST',
@@ -101,7 +101,7 @@ export async function SignInFunc({email, encrypted_password}) {
       },
       body: JSON.stringify({
         email: email,
-        password: encrypted_password,
+        password: password,
       }),
     })
 

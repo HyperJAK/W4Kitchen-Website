@@ -9,9 +9,6 @@ export async function POST(req, res) {
 
     const {email, password} = bodyData
 
-    // Decrypt the encrypted key, but for testing this isnt used since we are passing password unecrypted
-    const decryptedKey = await DecryptPassword(password)
-
     const connection = await pool.getConnection()
     const [data] = await connection.query(
       'SELECT user_id, profilePic, email, password, username, registration_date  FROM user WHERE email = ?',
@@ -25,13 +22,12 @@ export async function POST(req, res) {
     }
 
     const user = data[0]
-    const encryptedDbKey = user.password
+    const hashedDbKey = user.password
 
-    // Decrypt the password from the database
-    const decryptedDbKey = await DecryptPassword(encryptedDbKey)
+    console.log('Db pass: ' + hashedDbKey)
 
     // Check if the decrypted password matches the provided password
-    if (decryptedDbKey !== password) {
+    if (hashedDbKey !== password) {
       return NextResponse.json({message: 'Invalid password'}, {status: 401})
     }
 

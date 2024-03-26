@@ -22,7 +22,7 @@ const rubikBold = Rubik({
   weight: ['700'],
 })
 
-const SignUp = () => {
+const SignUp = ({setShowSignIn}) => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -184,7 +184,7 @@ const SignUp = () => {
               'justify-center w-50 flex flex-row border-solid border-secondary border-2 bg-opposite p-4 hover:bg-accent hover:cursor-pointer flex-row flex text-page rounded-2xl hover:text-opposite'
             }
             itemComponents={<p>Sign In</p>}
-            handle={''}
+            handle={() => setShowSignIn(true)}
           />
         </div>
       </div>
