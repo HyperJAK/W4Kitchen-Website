@@ -82,7 +82,7 @@ const CategoriesData = {
   ],
 }
 
-const MainTopIntroduction = () => {
+const MainTopIntroduction = ({data}) => {
   const [navToRecipeWithId, setNavToRecipeWithId] = useState('')
 
   const handleButtonClick = (event) => {
@@ -94,8 +94,46 @@ const MainTopIntroduction = () => {
       {/*Top Container with edit button and simple introduction text*/}
       <div
         className={
-          'bg-profileMainImg relative z-50 flex w-full flex-col flex-wrap items-center justify-between gap-20 bg-cover bg-fixed bg-no-repeat pb-[50px] pl-40 pr-40 pt-[50px]'
-        }></div>
+          'relative flex h-3/4 w-full flex-row bg-profileMainImg bg-cover'
+        }>
+        <div className={'h-full w-full bg-black/30'}>
+          <div className={'flex flex-col gap-10 pb-20 pl-20 pt-10'}>
+            {/*Page title*/}
+            <p
+              className={`${rubikBold.variable} font-rubik text-[2rem] text-white`}>
+              User<span className={'text-secondary'}>Account</span>
+              <span className={'text-secondary'}>.</span>
+            </p>
+            {/*Greeting user*/}
+
+            <p
+              className={`${rubikBold.variable} font-rubik text-[1.6rem] text-white`}>
+              Hello, <span className={'text-secondary'}>{data.username}</span>
+              <span className={'text-secondary'}>.</span>
+            </p>
+
+            {/*Informative of page*/}
+            <p
+              className={`${rubikRegular.variable} max-w-lg font-rubik text-[1.2rem] text-white`}>
+              This is your profile page. You can see the progress you've made
+              with your work and manage your projects or assigned tasks
+            </p>
+
+            {/*Button to enable editting*/}
+            <Button
+              style={
+                'justify-center w-[15%] flex flex-row border-solid border-secondary border-2 bg-secondary p-4 hover:bg-white hover:cursor-pointer flex-row flex text-white rounded-2xl hover:text-black'
+              }
+              itemComponents={
+                <>
+                  <p>Edit Profile</p>
+                </>
+              }
+              handle={''}
+            />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
