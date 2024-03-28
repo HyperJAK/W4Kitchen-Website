@@ -50,7 +50,7 @@ export default function Profile({params}) {
               return (
                 <div
                   className={
-                    'relative z-30 flex h-auto flex-col justify-center '
+                    'relative z-30 flex h-auto flex-col justify-center text-opposite '
                   }
                   key={data.id}>
                   {/*Div for picture and introductory text and button to edit*/}
