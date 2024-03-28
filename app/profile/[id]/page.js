@@ -49,9 +49,7 @@ export default function Profile({params}) {
           ? profileData.map((data) => {
               return (
                 <div
-                  className={
-                    'relative z-30 flex h-auto flex-col justify-center text-opposite '
-                  }
+                  className={`relative z-30 flex h-auto flex-col justify-center text-opposite ${rubikRegular.variable} font-rubik `}
                   key={data.id}>
                   {/*Div for picture and introductory text and button to edit*/}
                   <MainTopIntroduction data={data} />
