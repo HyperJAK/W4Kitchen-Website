@@ -99,7 +99,7 @@ const Nav = () => {
         {/*Normal nav*/}
         <div
           className={
-            ' my-auto flex h-auto w-full flex-row items-center justify-between bg-primary pl-4 pr-4'
+            ' my-auto flex h-20 w-full flex-row items-center justify-between bg-primary pl-4 pr-4'
           }>
           {/*Logo*/}
           <div>
@@ -115,34 +115,34 @@ const Nav = () => {
           {/*IMP !!!!!!!!! change font to rubik same as design*/}
           {/*navigation options*/}
           <div
-            className={`flex flex-row justify-center gap-x-10 transition-all ${rubikBold.variable} font-rubik text-[18px] text-opposite`}>
+            className={`flex flex-row justify-center gap-x-10 ${rubikBold.variable} h-full font-rubik text-[18px] text-opposite`}>
             <Link
               href={'/'}
-              className={`${pathName === '/' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
+              className={`${pathName === '/' ? 'border-b-4' : ''}  border-b-secondary p-6 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               Home
             </Link>
 
             <Link
               href={'/recipes'}
-              className={`${pathName === '/recipes' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
+              className={`${pathName === '/recipes' ? 'border-b-4' : ''}  border-b-secondary p-6  hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               Recipes
             </Link>
 
             <Link
               href={'/kitchenTips'}
-              className={`${pathName === '/kitchenTips' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
+              className={`${pathName === '/kitchenTips' ? 'border-b-4' : ''}  border-b-secondary p-6 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               Kitchen Tips
             </Link>
 
             <Link
               href={'/shop'}
-              className={`${pathName === '/shop' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
+              className={`${pathName === '/shop' ? 'border-b-4' : ''}  border-b-secondary p-6  hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               Shop
             </Link>
 
             <Link
               href={'/news'}
-              className={`${pathName === '/news' ? 'border-b-4' : ''} transform border-b-secondary p-5 hover:translate-y-0.5 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
+              className={`${pathName === '/news' ? 'border-b-4' : ''}  border-b-secondary p-6 hover:cursor-pointer hover:border-b-4 hover:border-solid`}>
               News
             </Link>
           </div>
