@@ -8,8 +8,8 @@ import {
   ValidUsername,
   HashPassword,
 } from '@/config/Utilities'
-import EmailButton from '@/components/shared/Validation/EmailButton'
-import PasswordButton from '@/components/shared/Validation/PasswordButton'
+import EmailTextfield from '@/components/shared/Validation/EmailTextfield'
+import PasswordTextfield from '@/components/shared/Validation/PasswordTextfield'
 import Button from '@/components/shared/Button'
 import Link from 'next/link'
 import Title from '@/components/shared/Title'
@@ -109,25 +109,25 @@ const SignUp = ({setShowSignIn}) => {
       {/*Buttons and textfields here*/}
       <div className={'flex flex-col gap-4'}>
         {/*Username textfield here*/}
-        <EmailButton
+        <EmailTextfield
           props={{email: username, setEmail: setUsername, title: 'Username'}}
         />
         {/*Email + small info p under*/}
         <div className={'flex flex-col'}>
-          <EmailButton props={{email: email, setEmail: setEmail}} />
+          <EmailTextfield props={{email: email, setEmail: setEmail}} />
           <p>You can use letters, numbers and periods</p>
         </div>
         {/*Password + confirm password + p info*/}
         <div className={'flex flex-col'}>
           <div className={'flex flex-row gap-2'}>
-            <PasswordButton
+            <PasswordTextfield
               props={{
                 password: password,
                 setPassword: setPassword,
                 showPassword: showPassword,
               }}
             />
-            <PasswordButton
+            <PasswordTextfield
               props={{
                 password: cPassword,
                 setPassword: setCPass,

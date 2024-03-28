@@ -27,6 +27,7 @@ export async function POST(req, res) {
     if (!data) {
       return NextResponse.json({message: 'User not found'}, {status: 404})
     }
+    console.log('The id of the inserted item is: ' + data.insertId)
 
     return NextResponse.json(data, {status: 200})
   } catch (error) {
