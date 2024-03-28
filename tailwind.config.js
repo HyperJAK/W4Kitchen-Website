@@ -24,6 +24,7 @@ module.exports = {
         accent: '#F5F4F4',
         page: '#FFFFFF',
         opposite: '#10101F',
+        backupOppositeOfOpposite: '#D9D9D9',
       },
       backgroundImage: {
         space: 'url("/bg-explosion.jpeg")',
@@ -31,7 +32,7 @@ module.exports = {
         sitePng: 'url("/svg-bg.png")',
         logo: 'url("/W4Kitchen.png")',
         recipeCategoriesImg: 'url("/recipeCategories.png")',
-        profileMainImg: 'url("/profilePicMain.png")',
+        profileMainImg: 'url("/profilePic.png")',
       },
       animation: {
         'spin-slow': 'spin 10s linear infinite',
