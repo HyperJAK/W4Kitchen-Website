@@ -1,107 +1,47 @@
-/*
-import React, {useEffect, useState} from 'react'
-import {Button} from 'react-bootstrap'
+'use client'
+import {useEffect, useState} from 'react'
+
 import {
-  EncryptPassword,
-  SignInFunc,
-  SignUpFunc,
   ValidEmail,
   ValidPassword,
-} from '../Utilities'
-import axios from 'axios'
-import {DarkBlue} from '../../assets/colors/Colors'
-import EmailAndPass from '@/components/shared/Validation/EmailAndPass'
+  SignUpFunc,
+  EncryptPassword,
+  ValidUsername,
+  HashPassword,
+  SignInFunc,
+} from '@/config/Utilities'
+import EmailTextfield from '@/components/shared/Validation/EmailTextfield'
+import PasswordTextfield from '@/components/shared/Validation/PasswordTextfield'
+import Button from '@/components/shared/Button'
+import Link from 'next/link'
+import Title from '@/components/shared/Title'
+import Image from 'next/image'
+import {Rubik} from 'next/font/google'
 
-const AuthRegister = ({setIsLogIn, setUser, setCurrentScreen}) => {
-  const [isHovered, setIsHovered] = useState(false)
-  const [decryptedText, setDecryptedText] = useState(null)
+const rubikBold = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+  weight: ['700'],
+})
 
-  const {isAuthenticated, user, loginWithPopup} = useAuth0()
-
-  const button_style = {
-    width: '100%',
-    marginTop: '15px',
-    borderRadius: '30px',
-    height: '60px',
-    color: isHovered ? 'white' : 'black',
-    border: '1px solid red',
-    backgroundColor: isHovered ? DarkBlue : 'transparent',
-  }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isAuthenticated && user?.sub) {
-        // Check if user and user.sub are defined
-
-        const encryptedPass = await EncryptPassword(user.sub)
-        const email = user.email
-        const username = user.name
-        const profilePic = user.picture
-
-        console.log(encryptedPass)
-        console.log(email)
-
-        const userInfo = {email, encryptedPass, username, profilePic}
-        // send the username and password to the server
-        try {
-          await SignInFunc(userInfo, setUser)
-          setIsLogIn(false)
-          setCurrentScreen('home')
-        } finally {
-          await SignUpFunc(userInfo, setUser)
-          setIsLogIn(false)
-          setCurrentScreen('home')
-        }
-
-        const data = {email}
-
-        try {
-          const response = await axios.post(
-            'http://localhost:4000/getUserId',
-            data
-          )
-
-          const userId = response.data.user.id
-
-          setUser((prevUser) => ({
-            ...prevUser,
-            id: userId,
-            username: username,
-            email: email,
-            password: encryptedPass,
-            image: profilePic,
-          }))
-        } catch (error) {
-          //alert(error.response.data.error);
-          alert(error)
-          return false
-        }
-
-        // Try comparing encrypted key and email to the database
-
-        // If it doesn't exist, send email and encrypted key to the user
-        // Set user pfp and username to the database
-
-        // Else, set user isLoggedIn
-      }
-    }
-
-    fetchData()
-  }, [isAuthenticated, user, process.env.REACT_APP_ENCRYPTION_KEY])
+const AuthRegister = () => {
+  const handleAuthExternal = async (e) => {}
 
   return (
-    <div className="mb-4 pt-1">
+    <Link href={'/api/auth/login'}>
       <Button
-        style={button_style}
-        size="lg"
-        onClick={() => loginWithPopup()}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}>
-        External Login
-      </Button>
-    </div>
+        style={
+          'justify-center w-50 flex flex-row border-solid border-secondary border-2 bg-white p-4 hover:bg-secondary hover:cursor-pointer flex-row flex text-opposite rounded-2xl hover:text-accent'
+        }
+        itemComponents={
+          <>
+            <p>Icon</p> <p> External Registration</p>
+          </>
+        }
+        handle={handleAuthExternal}
+      />
+    </Link>
   )
 }
 
 export default AuthRegister
-*/
