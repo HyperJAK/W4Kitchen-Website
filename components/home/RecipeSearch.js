@@ -35,10 +35,10 @@ const RecipeSearch = () => {
       {/*Main components parent*/}
       <div
         className={
-          'z-50 flex w-full flex-row items-start justify-between pl-40 pr-40'
+          'z-50 mt-[200px] flex w-full flex-row flex-wrap items-center justify-center gap-60 pl-40 pr-40'
         }>
         {/*Catchphrase and search textfield*/}
-        <div className={'flex w-[775px] flex-col items-start justify-center'}>
+        <div className={'flex w-[775px] flex-col items-center justify-center'}>
           {/*Catchphrase*/}
           <p
             className={`${rubikBold.variable} text-center font-rubik text-[4rem] text-opposite`}>
@@ -78,8 +78,8 @@ const RecipeSearch = () => {
           <Image
             src={'/pot.png'}
             alt={'introductory pic'}
-            width={500}
-            height={500}
+            width={400}
+            height={400}
           />
         </div>
       </div>

@@ -25,7 +25,7 @@ const Button = ({itemComponents, handle, style}) => {
       className={
         style
           ? style
-          : `${rubikRegular.variable} button flex max-h-40 flex-row justify-center rounded-2xl border-2 border-solid border-secondary bg-secondary p-2 font-rubik text-opposite hover:cursor-pointer hover:bg-transparent`
+          : `${rubikRegular.variable} button flex max-h-40 flex-row justify-center rounded-2xl border-2 border-solid border-secondary bg-secondary p-2 font-rubik text-white hover:cursor-pointer hover:bg-transparent hover:text-opposite`
       }
       onClick={handle ? handle : null}>
       {itemComponents ? itemComponents : 'empty'}

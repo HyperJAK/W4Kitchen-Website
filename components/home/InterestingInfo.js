@@ -57,7 +57,7 @@ const InterestingInfo = () => {
       {/*Main components parent*/}
       <div
         className={
-          'z-50 flex w-full flex-row flex-wrap items-center justify-between bg-accent pb-[120px] pl-40 pr-40 pt-[120px]'
+          'z-50 flex w-full flex-row flex-wrap items-center justify-center gap-60 bg-accent pb-[120px] pl-40 pr-40 pt-[120px]'
         }>
         {/*Image div*/}
         <div className={'relative'}>

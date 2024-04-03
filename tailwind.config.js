@@ -19,17 +19,20 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: '#55EF43',
+        primary: '#6D6DF3',
         secondary: '#F06E30',
         accent: '#F5F4F4',
         page: '#FFFFFF',
         opposite: '#10101F',
+        backupOppositeOfOpposite: '#D9D9D9',
       },
       backgroundImage: {
         space: 'url("/bg-explosion.jpeg")',
         site: 'url("/site-bg.svg")',
         sitePng: 'url("/svg-bg.png")',
-        logo: 'url("/W4Kitchen.png)',
+        logo: 'url("/W4Kitchen.png")',
+        recipeCategoriesImg: 'url("/recipeCategories.png")',
+        profileMainImg: 'url("/profilePic.png")',
       },
       animation: {
         'spin-slow': 'spin 10s linear infinite',
