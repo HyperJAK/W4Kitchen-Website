@@ -99,19 +99,27 @@ const Nav = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:3000/api/auth/me`)
+      try {
+        const response = await fetch(`http://localhost:3000/api/auth/me`)
 
-      const data = await response.json()
-      console.log('The auth info is: ' + data.email)
+        const data = await response.json()
+        console.log('The auth info is: ' + data.email)
 
-      if (data) {
-        setAuthed(true)
-      } else {
+        if (data) {
+          setAuthed(true)
+
+          //Then we add the info to local storage
+        }
+      } catch (error) {
         setAuthed(false)
       }
     }
     fetchData()
   })
+
+  const handleLogout = (e) => {
+    setAuthed(false)
+  }
 
   return (
     <>
@@ -294,6 +302,26 @@ const Nav = () => {
                   </>
                 }
                 handle={handleAboutUsClick}
+              />
+            </Link>
+
+            <Link href={'/api/auth/logout'}>
+              <Button
+                style={
+                  'bg-accent/50 p-10 pr-40 hover:bg-secondary hover:cursor-pointer flex-row flex gap-2 rounded-bl-2xl'
+                }
+                itemComponents={
+                  <>
+                    <p>Log out</p>{' '}
+                    <Image
+                      src={'/icons/person.png'}
+                      alt={'person image'}
+                      width={20}
+                      height={20}
+                    />
+                  </>
+                }
+                handle={handleLogout}
               />
             </Link>
           </div>
