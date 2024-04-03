@@ -22,18 +22,26 @@ const rubikRegular = Rubik({
 })
 
 export default function Profile({params}) {
-  const [profileData, setProfileData] = useState(null)
+  const [data, setData] = useState(null)
+  const [allowEdit, setAllowEdit] = useState(false)
+  const [originalPass, setOriginalPass] = useState(null)
+  const [cPassword, setCPassword] = useState(null)
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/profile?id=${params.id}`
+          `http://localhost:3000/api/profile?id=${params.id}`,
+          {
+            method: 'GET',
+          }
         )
 
         const data = await response.json()
 
-        setProfileData(data)
+        setData(data)
+        setCPassword(data.password)
+        setOriginalPass(data.password)
       } catch (error) {
         console.error(error)
       }
@@ -45,45 +53,67 @@ export default function Profile({params}) {
   return (
     <>
       <div>
-        {profileData
-          ? profileData.map((data) => {
-              return (
-                <div
-                  className={`relative z-30 flex h-auto flex-col justify-center text-opposite ${rubikRegular.variable} font-rubik `}
-                  key={data.id}>
-                  {/*Div for picture and introductory text and button to edit*/}
-                  <MainTopIntroduction data={data} />
-                  {/*Div for info of user and his pfp*/}
-                  <div className={'flex flex-col flex-wrap gap-20 lg:flex-row'}>
-                    {/*Div for user info*/}
-                    <div
-                      className={
-                        'ml-5 flex w-[50%] flex-col rounded-3xl lg:translate-y-[-5%]'
-                      }>
-                      {/*Title*/}
-                      <p
-                        className={`${rubikBold.variable} w-full rounded-tl-3xl rounded-tr-3xl bg-backupOppositeOfOpposite p-5 font-rubik text-[2rem] text-opposite`}>
-                        Account Settings
-                      </p>
-                      {/*User Information*/}
-                      <UserInformation data={data} />
+        {data ? (
+          <div
+            className={`relative z-30 flex h-auto flex-col justify-center text-opposite ${rubikRegular.variable} font-rubik `}
+            key={data.id}>
+            {/*Div for picture and introductory text and button to edit*/}
+            <MainTopIntroduction
+              data={data}
+              allowEdit={allowEdit}
+              setAllowEdit={setAllowEdit}
+              cPassword={cPassword}
+              originalPass={originalPass}
+            />
+            {/*Div for info of user and his pfp*/}
+            <div className={'flex flex-col flex-wrap gap-20 lg:flex-row'}>
+              {/*Div for user info*/}
+              <div
+                className={
+                  'ml-5 flex w-[50%] flex-col rounded-3xl lg:translate-y-[-5%]'
+                }>
+                {/*Title*/}
+                <p
+                  className={`${rubikBold.variable} w-full rounded-tl-3xl rounded-tr-3xl bg-backupOppositeOfOpposite p-5 font-rubik text-[2rem] text-opposite`}>
+                  Account Settings
+                </p>
+                {/*User Information*/}
+                <UserInformation
+                  data={data}
+                  setData={setData}
+                  allowEdit={allowEdit}
+                  setCPassword={setCPassword}
+                  cPassword={cPassword}
+                />
 
-                      {/*Residential info component*/}
-                      <ResidentialInformation data={data} />
+                {/*Residential info component*/}
+                <ResidentialInformation
+                  data={data}
+                  setData={setData}
+                  allowEdit={allowEdit}
+                />
 
-                      {/*About me info component*/}
-                      <AboutMe data={data} />
+                {/*About me info component*/}
+                <AboutMe
+                  data={data}
+                  setData={setData}
+                  allowEdit={allowEdit}
+                />
 
-                      {/*Credit card info component*/}
-                      <CreditCardInfo data={data} />
-                    </div>
-                    {/*User pfp and other info*/}
-                    <UserProfilePicDiv />
-                  </div>
-                </div>
-              )
-            })
-          : 'Display a loading div here'}
+                {/*Credit card info component*/}
+                <CreditCardInfo
+                  data={data}
+                  setData={setData}
+                  allowEdit={allowEdit}
+                />
+              </div>
+              {/*User pfp and other info*/}
+              <UserProfilePicDiv />
+            </div>
+          </div>
+        ) : (
+          'Display a loading div here'
+        )}
       </div>
     </>
   )

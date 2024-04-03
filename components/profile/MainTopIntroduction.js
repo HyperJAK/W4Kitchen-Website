@@ -7,6 +7,7 @@ import Image from 'next/image'
 import {useState} from 'react'
 import Button from '@/components/shared/Button'
 import Link from 'next/link'
+import {HashPassword, UpdateProfile} from '@/config/Utilities'
 
 const rubikBold = Rubik({
   subsets: ['latin'],
@@ -82,11 +83,48 @@ const CategoriesData = {
   ],
 }
 
-const MainTopIntroduction = ({data}) => {
+const MainTopIntroduction = ({
+  data,
+  setData,
+  cPassword,
+  allowEdit,
+  setAllowEdit,
+  originalPass,
+}) => {
   const [navToRecipeWithId, setNavToRecipeWithId] = useState('')
 
   const handleButtonClick = (event) => {
     setNavToRecipeWithId(event.target.key)
+  }
+
+  const handleEditClick = async (event) => {
+    console.log('Original pass(hashed): ' + originalPass)
+    if (allowEdit) {
+      if (cPassword === data.password) {
+        try {
+          console.log('Original pass(hashed): ' + originalPass)
+          console.log('New one or old depends if edited: ' + data.password)
+          const toHash = data.password
+          const hashedPass = await HashPassword({toHash})
+
+          console.log(
+            'New either hashed once or twice if it was hashed(hashed): ' +
+              hashedPass
+          )
+
+          if (originalPass !== toHash) {
+            setData((prevData) => ({
+              ...prevData,
+              password: hashedPass,
+            }))
+          }
+
+          await UpdateProfile({data})
+        } catch (error) {}
+      }
+    }
+    setAllowEdit(!allowEdit)
+    console.log(allowEdit)
   }
 
   return (
@@ -115,8 +153,8 @@ const MainTopIntroduction = ({data}) => {
             {/*Informative of page*/}
             <p
               className={`${rubikRegular.variable} max-w-lg font-rubik text-[1.2rem] text-white`}>
-              This is your profile page. You can see the progress you've made
-              with your work and manage your projects or assigned tasks
+              This is your profile page. You can see the progress you&apos;ve
+              made with your work and manage your projects or assigned tasks
             </p>
 
             {/*Button to enable editting*/}
@@ -125,11 +163,9 @@ const MainTopIntroduction = ({data}) => {
                 'justify-center w-[15%] flex flex-row border-solid border-secondary border-2 bg-secondary p-4 hover:bg-white hover:cursor-pointer flex-row flex text-white rounded-2xl hover:text-black'
               }
               itemComponents={
-                <>
-                  <p>Edit Profile</p>
-                </>
+                <>{allowEdit ? <p>Save</p> : <p>Edit Profile</p>}</>
               }
-              handle={''}
+              handle={handleEditClick}
             />
           </div>
         </div>

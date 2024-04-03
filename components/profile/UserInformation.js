@@ -9,6 +9,14 @@ import Button from '@/components/shared/Button'
 import Link from 'next/link'
 import EmailTextfield from '@/components/shared/Validation/EmailTextfield'
 import PasswordTextfield from '@/components/shared/Validation/PasswordTextfield'
+import LabelField from '@/components/shared/LabelField'
+import {
+  HashPassword,
+  SignInFunc,
+  UpdateProfile,
+  ValidEmail,
+  ValidPassword,
+} from '@/config/Utilities'
 
 const rubikBold = Rubik({
   subsets: ['latin'],
@@ -28,15 +36,40 @@ const rubikRegular = Rubik({
   weight: ['400'],
 })
 
-const UserInformation = ({data}) => {
-  const [username, setUsername] = useState(data.username)
-  const [email, setEmail] = useState(data.email)
-  const [password, setPassword] = useState(data.password)
-  const [cPassword, setCPass] = useState('')
+const UserInformation = ({
+  data,
+  setData,
+  allowEdit,
+  setCPassword,
+  cPassword,
+}) => {
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleButtonClick = (event) => {
-    setNavToRecipeWithId(event.target.key)
+  const handleUsername = (e) => {
+    if (allowEdit === true && e.target.value.length < 256) {
+      setData((prevData) => ({
+        ...prevData,
+        username: e.target.value,
+      }))
+    }
+  }
+
+  const handleEmail = (e) => {
+    if (allowEdit === true && e.target.value.length < 256) {
+      setData((prevData) => ({
+        ...prevData,
+        email: e.target.value,
+      }))
+    }
+  }
+
+  const handlePassword = (e) => {
+    if (allowEdit === true && e.target.value.length < 51) {
+      setData((prevData) => ({
+        ...prevData,
+        password: e.target.value,
+      }))
+    }
   }
 
   return (
@@ -45,51 +78,60 @@ const UserInformation = ({data}) => {
       <div className={'flex flex-col gap-6 bg-accent p-5'}>
         {/*Title of component*/}
         <p
-          className={`${rubikRegular.variable} w-full rounded-full bg-secondary p-3 font-rubik text-[1.2rem]`}>
+          className={`${rubikRegular.variable} w-full rounded-full bg-secondary pb-3 pl-5 pt-3 font-rubik text-[1.2rem]`}>
           User Information
         </p>
         {/*Fields*/}
         <div className={'flex w-full flex-row gap-10'}>
           {/*Username*/}
           <div className={'flex w-full flex-col gap-1'}>
-            <p>Username</p>
+            <LabelField props={{label: 'Username'}} />
             <EmailTextfield
               props={{
-                email: username,
-                setEmail: setUsername,
+                email: data.username,
                 title: 'Username',
+                allowEdit: allowEdit,
+                handleChange: handleUsername,
               }}
             />
           </div>
 
           {/*Email*/}
           <div className={'flex w-full flex-col gap-1'}>
-            <p>Email</p>
-            <EmailTextfield props={{email: email, setEmail: setEmail}} />
+            <LabelField props={{label: 'Email'}} />
+            <EmailTextfield
+              props={{
+                email: data.email,
+                allowEdit: allowEdit,
+                handleChange: handleEmail,
+              }}
+            />
           </div>
         </div>
         <div className={'flex flex-row gap-10'}>
           {/*Password*/}
           <div className={'flex w-full flex-col gap-1'}>
-            <p>Password</p>
+            <LabelField props={{label: 'Password'}} />
             <PasswordTextfield
               props={{
-                password: password,
-                setPassword: setPassword,
+                password: data.password,
                 showPassword: showPassword,
+                allowEdit: allowEdit,
+                handleChange: handlePassword,
               }}
             />
           </div>
 
           {/*Confirm Password*/}
           <div className={'flex w-full flex-col gap-1'}>
-            <p>Confirm password</p>
+            <LabelField props={{label: 'Confirm password'}} />
             <PasswordTextfield
               props={{
                 password: cPassword,
-                setPassword: setCPass,
+                setPassword: setCPassword,
                 title: 'Confirm password',
                 showPassword: showPassword,
+                allowEdit: allowEdit,
               }}
             />
           </div>

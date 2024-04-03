@@ -9,6 +9,7 @@ import Button from '@/components/shared/Button'
 import Link from 'next/link'
 import EmailTextfield from '@/components/shared/Validation/EmailTextfield'
 import PasswordTextfield from '@/components/shared/Validation/PasswordTextfield'
+import LabelField from '@/components/shared/LabelField'
 
 const rubikBold = Rubik({
   subsets: ['latin'],
@@ -28,10 +29,34 @@ const rubikRegular = Rubik({
   weight: ['400'],
 })
 
-const ResidentialInformation = ({data}) => {
-  const [address, setAddress] = useState(data ? data.address : '')
-  const [city, setCity] = useState(data ? data.city : '')
-  const [country, setCountry] = useState(data ? data.country : '')
+const ResidentialInformation = ({data, setData, allowEdit}) => {
+  const handleAddress = (e) => {
+    if (allowEdit === true && e.target.value.length < 501) {
+      setData((prevData) => ({
+        ...prevData,
+        address: e.target.value,
+      }))
+      console.log('This is data address: ' + data.address)
+    }
+  }
+
+  const handleCity = (e) => {
+    if (allowEdit === true && e.target.value.length < 46) {
+      setData((prevData) => ({
+        ...prevData,
+        city: e.target.value,
+      }))
+    }
+  }
+
+  const handleCountry = (e) => {
+    if (allowEdit === true && e.target.value.length < 46) {
+      setData((prevData) => ({
+        ...prevData,
+        country: e.target.value,
+      }))
+    }
+  }
 
   return (
     <>
@@ -39,33 +64,48 @@ const ResidentialInformation = ({data}) => {
       <div className={'flex flex-col gap-6 bg-accent p-5'}>
         {/*Title of component*/}
         <p
-          className={`${rubikRegular.variable} w-full rounded-full bg-secondary p-3 font-rubik text-[1.2rem]`}>
+          className={`${rubikRegular.variable} w-full rounded-full bg-secondary pb-3 pl-5 pt-3 font-rubik text-[1.2rem]`}>
           Residential Information
         </p>
         {/*Fields*/}
         <div className={'flex w-full flex-row gap-10'}>
           {/*Address*/}
           <div className={'flex w-full flex-col gap-1'}>
-            <p>Address</p>
+            <LabelField props={{label: 'Address'}} />
             <EmailTextfield
-              props={{email: address, setEmail: setAddress, title: 'Address'}}
+              props={{
+                email: data.address,
+                title: 'Address',
+                allowEdit: allowEdit,
+                handleChange: handleAddress,
+              }}
             />
           </div>
         </div>
         <div className={'flex flex-row gap-10'}>
           {/*City*/}
           <div className={'flex w-full flex-col gap-1'}>
-            <p>City</p>
+            <LabelField props={{label: 'City'}} />
             <EmailTextfield
-              props={{email: city, setEmail: setCity, title: 'City'}}
+              props={{
+                email: data.city,
+                title: 'City',
+                allowEdit: allowEdit,
+                handleChange: handleCity,
+              }}
             />
           </div>
 
           {/*Country*/}
           <div className={'flex w-full flex-col gap-1'}>
-            <p>Country</p>
+            <LabelField props={{label: 'Country'}} />
             <EmailTextfield
-              props={{email: country, setEmail: setCountry, title: 'Country'}}
+              props={{
+                email: data.country,
+                title: 'Country',
+                allowEdit: allowEdit,
+                handleChange: handleCountry,
+              }}
             />
           </div>
         </div>
