@@ -16,6 +16,7 @@ import Link from 'next/link'
 import Title from '@/components/shared/Title'
 import Image from 'next/image'
 import {Rubik} from 'next/font/google'
+import AuthRegister from '@/components/shared/Validation/AuthRegister'
 
 const rubikBold = Rubik({
   subsets: ['latin'],
@@ -47,7 +48,7 @@ const SignIn = ({setShowSignIn}) => {
 
         try {
           // Assuming setUser and setCurrentScreen are defined elsewhere
-          await SignInFunc({email, password: hashedPass})
+          const response = await SignInFunc({email, password: hashedPass})
           console.log('Signup successful!') // Log success for debugging
         } catch (error) {
           // Handle specific errors (if possible)
@@ -143,19 +144,7 @@ const SignIn = ({setShowSignIn}) => {
           handle={handleSignIn}
         />
         {/*External logins and pic here*/}
-        <Link href={'/api/auth/login'}>
-          <Button
-            style={
-              'justify-center w-50 flex flex-row border-solid border-secondary border-2 bg-white p-4 hover:bg-secondary hover:cursor-pointer flex-row flex text-opposite rounded-2xl hover:text-accent'
-            }
-            itemComponents={
-              <>
-                <p>Icon</p> <p> External Registration</p>
-              </>
-            }
-            handle={''}
-          />
-        </Link>
+        <AuthRegister />
 
         {/*Sign ip button and text*/}
         <div
