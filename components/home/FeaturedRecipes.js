@@ -124,7 +124,7 @@ const FeaturedRecipes = () => {
       </div>
 
       {recipes && (
-        <div className={'w-[50%] min-w-[50%]'}>
+        <div className={'w-[500px] min-w-[500px]'}>
           <Swiper
             spaceBetween={10}
             pagination={{
