@@ -36,6 +36,7 @@ import {useEffect, useState} from 'react'
 import SignUp from '@/components/shared/Validation/SignUp'
 import Title from '@/components/shared/Title'
 import SignIn from '@/components/shared/Validation/SignIn'
+import {HashPassword, SignInFunc, SignUpFunc} from '@/config/Utilities'
 
 const rubikRegular = Rubik({
   subsets: ['latin'],
@@ -60,7 +61,7 @@ const Nav = () => {
 
   const [languageClicked, setLanguageClicked] = useState(false)
   const [profilePicClicked, setProfilePicClicked] = useState(false)
-  const [id, setId] = useState(3)
+  const [id, setId] = useState(-1)
   const [showAuth, setShowAuth] = useState(false)
   const [authed, setAuthed] = useState(false)
 
@@ -98,24 +99,104 @@ const Nav = () => {
   }
 
   useEffect(() => {
+    /*async function fetchData() {
+      try {
+        const response = await fetch(`http://localhost:3000/api/auth/me`)
+
+        const data = await response.json()
+        console.log('The auth email is: ' + data.email)
+
+        if (data) {
+          setAuthed(true)
+          try {
+            const sub = data.sub
+            const email = data.email
+
+            const hashedSub = await HashPassword({sub})
+
+            //here first we call a api call to get the id from database based on the email
+            const response = await SignInFunc({email, password: hashedSub})
+
+            //Then we add the info to local storage
+            if (response) {
+              const userForStorage = {
+                userId: response.user_id,
+              }
+
+              localStorage.setItem('user', JSON.stringify(userForStorage))
+            }
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      } catch (error) {
+        setAuthed(false)
+      }
+    }*/
+
     async function fetchData() {
       try {
         const response = await fetch(`http://localhost:3000/api/auth/me`)
 
         const data = await response.json()
-        console.log('The auth info is: ' + data.email)
+        console.log('The auth email is: ' + data.email)
+        console.log('The password is: ' + data.sub)
 
         if (data) {
-          setAuthed(true)
+          try {
+            const sub = data.sub
+            const email = data.email
+            const name = data.name
 
-          //Then we add the info to local storage
+            const hashedSub = await HashPassword({sub})
+            console.log('Entering Signin func')
+
+            //here first we call a api call to get the id from database based on the email
+            const response = await SignInFunc({email, password: hashedSub})
+
+            if (!response.user_id) {
+              const response2 = await SignUpFunc({
+                email,
+                password: hashedSub,
+                username: name,
+              })
+
+              if (response2.insertId) {
+                //here we put the nav value of id so we can use it for profile page:
+                setAuthed(true)
+                const storedUser = localStorage.getItem('user')
+
+                if (storedUser) {
+                  const parsedUser = JSON.parse(storedUser)
+                  setId(parsedUser.userId)
+                  console.log(parsedUser.userId)
+                }
+              } else {
+                console.log('Failed to Signup, err Nav line 174')
+              }
+            } else {
+              setAuthed(true)
+              //here we put the nav value of id so we can use it for profile page:
+              const storedUser = localStorage.getItem('user')
+
+              if (storedUser) {
+                const parsedUser = JSON.parse(storedUser)
+                setId(parsedUser.userId)
+                console.log(parsedUser.userId)
+              }
+            }
+          } catch (error) {
+            console.log(error)
+            console.log('Crashed inside')
+          }
         }
       } catch (error) {
-        setAuthed(false)
+        console.log('Crashed outside')
       }
     }
+    /*fetchData2()*/
     fetchData()
-  })
+  }, [])
 
   const handleLogout = (e) => {
     setAuthed(false)

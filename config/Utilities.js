@@ -111,6 +111,17 @@ export async function SignInFunc({email, password}) {
     //console.log(response.data.data)
 
     console.log(data.message)
+
+    if (data.user_id) {
+      const userForStorage = {
+        userId: data.user_id,
+      }
+
+      localStorage.setItem('user', JSON.stringify(userForStorage))
+      console.log('Saved in local storage after signin')
+    }
+
+    return data
   } catch (error) {
     //alert(error.response.data.error);
     console.log(error)
@@ -132,12 +143,27 @@ export async function SignUpFunc({email, password, username}) {
       }),
     })
 
+    console.log('Email in signup func is: ' + email)
+    console.log('Username in signup func is: ' + username)
+    console.log('Password in signup func is: ' + password)
+
     const data = await response.json()
 
-    //console.log("RESPONSESSSS")
-    //console.log(response.data.data)
+    console.log('RESPONSESSSS')
+    console.log(data.user_id)
 
     console.log(data.message)
+
+    if (data.insertId) {
+      const userForStorage = {
+        userId: data.insertId,
+      }
+
+      localStorage.setItem('user', JSON.stringify(userForStorage))
+      console.log('Saved in local storage after signup')
+    }
+
+    return data
   } catch (error) {
     //alert(error.response.data.error);
     console.log(error)
