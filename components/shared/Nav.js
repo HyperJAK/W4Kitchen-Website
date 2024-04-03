@@ -9,6 +9,9 @@ import {
   HiEnvelope,
 } from 'react-icons/hi2'
 
+//Auth
+import {useUser} from '@auth0/nextjs-auth0/client'
+
 // nav data
 export const navData = [
   {name: 'home', path: '/', icon: <HiHome />},
@@ -29,7 +32,7 @@ import {usePathname} from 'next/navigation'
 import Image from 'next/image'
 import {Rubik} from 'next/font/google'
 import Button from '@/components/shared/Button'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import SignUp from '@/components/shared/Validation/SignUp'
 import Title from '@/components/shared/Title'
 import SignIn from '@/components/shared/Validation/SignIn'
@@ -59,6 +62,7 @@ const Nav = () => {
   const [profilePicClicked, setProfilePicClicked] = useState(false)
   const [id, setId] = useState(3)
   const [showAuth, setShowAuth] = useState(false)
+  const [authed, setAuthed] = useState(false)
 
   const [showSignIn, setShowSignIn] = useState(false)
 
@@ -92,6 +96,22 @@ const Nav = () => {
   const handleAboutUsClick = () => {
     /*handle about us clicked*/
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`http://localhost:3000/api/auth/me`)
+
+      const data = await response.json()
+      console.log('The auth info is: ' + data.email)
+
+      if (data) {
+        setAuthed(true)
+      } else {
+        setAuthed(false)
+      }
+    }
+    fetchData()
+  })
 
   return (
     <>
@@ -153,10 +173,13 @@ const Nav = () => {
               'my-auto flex flex-row items-center justify-center gap-x-5'
             }>
             {/*signin / logout button here*/}
-            <Button
-              itemComponents={<p>Sign In</p>}
-              handle={handleSignInButtonClick}
-            />
+            {!authed && (
+              <Button
+                itemComponents={<p>Sign In</p>}
+                handle={handleSignInButtonClick}
+              />
+            )}
+
             {/*language chooser button here*/}
             <Button
               itemComponents={
