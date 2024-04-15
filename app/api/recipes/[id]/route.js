@@ -20,7 +20,7 @@ export async function GET(req, res) {
       return NextResponse.json({message: 'Recipe not found'}, {status: 404})
     }
 
-    return NextResponse.json(data, {status: 200})
+    return NextResponse.json(data[0], {status: 200})
   } catch (error) {
     console.error(error)
     return NextResponse.json(
