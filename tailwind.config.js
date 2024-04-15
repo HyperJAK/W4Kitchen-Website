@@ -31,7 +31,7 @@ module.exports = {
         site: 'url("/site-bg.svg")',
         sitePng: 'url("/svg-bg.png")',
         logo: 'url("/W4Kitchen.png")',
-        recipeCategoriesImg: 'url("/recipeCategories.png")',
+        recipeCategoriesImg: 'url("/recipeExample.png")',
         profileMainImg: 'url("/profilePic.png")',
       },
       animation: {

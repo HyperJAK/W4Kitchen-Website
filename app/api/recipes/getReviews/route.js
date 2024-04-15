@@ -3,24 +3,25 @@ import {NextResponse} from 'next/server'
 
 export async function GET(req, res) {
   try {
-    //Found out the hard way that its important to create new objects using the already available objects in req
-    //Meaning we cannot directly write: const id = req.url.searchParams.get('id')
     const url = new URL(req.url)
     const searchParams = new URLSearchParams(url.searchParams)
     const id = searchParams.get('id')
 
     const connection = await pool.getConnection()
     const [data] = await connection.query(
-      'SELECT * FROM recipe WHERE recipe_id = ?',
+      'select distinct i.*, rhe.*, u.username, u.profilePic, u.email from review i, recipe_has_review rhe, recipe re, user u where rhe.Recipe_recipe_id = ? and rhe.Review_review_id = i.review_id and u.user_id = rhe.User_user_id;',
       [id]
     )
     await connection.release()
 
     if (!data) {
-      return NextResponse.json({message: 'Recipe not found'}, {status: 404})
+      return NextResponse.json(
+        {message: 'Ingredients not found'},
+        {status: 404}
+      )
     }
 
-    return NextResponse.json(data[0], {status: 200})
+    return NextResponse.json(data, {status: 200})
   } catch (error) {
     console.error(error)
     return NextResponse.json(

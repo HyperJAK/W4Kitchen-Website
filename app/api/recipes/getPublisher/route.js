@@ -11,13 +11,13 @@ export async function GET(req, res) {
 
     const connection = await pool.getConnection()
     const [data] = await connection.query(
-      'SELECT * FROM recipe WHERE recipe_id = ?',
+      'SELECT email, username, profilePic FROM USER WHERE user_id = ?',
       [id]
     )
     await connection.release()
 
     if (!data) {
-      return NextResponse.json({message: 'Recipe not found'}, {status: 404})
+      return NextResponse.json({message: 'User not found'}, {status: 404})
     }
 
     return NextResponse.json(data[0], {status: 200})

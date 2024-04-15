@@ -13,7 +13,6 @@ export default function Recipes() {
         }>
         <RecipeCategories />
         <ProfessionalTips />
-        <p>Hello testing</p>
       </main>
     </>
   )
