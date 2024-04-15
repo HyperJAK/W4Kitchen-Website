@@ -46,7 +46,7 @@ const workSliderData = {
 //components
 import Socials from '../Socials'
 import Image from 'next/image'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import * as withClient from 'react'
 //import swiper react components
 import {Swiper, SwiperSlide} from 'swiper/react'
@@ -73,10 +73,29 @@ const rubikRegular = Rubik({
 
 const FeaturedRecipes = () => {
   const [recipeName, setRecipeName] = useState('')
+  const [recipes, setRecipes] = useState([])
 
   const handleInputChange = (event) => {
     setRecipeName(event.target.value)
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/recipes/getFirst5`,
+          {
+            method: 'GET',
+          }
+        )
+
+        const data = await response.json()
+
+        setRecipes(data)
+      } catch (error) {}
+    }
+    fetchData()
+  })
 
   return (
     <div
@@ -104,78 +123,65 @@ const FeaturedRecipes = () => {
         />
       </div>
 
-      <div className={'w-[50%]'}>
-        <Swiper
-          spaceBetween={10}
-          pagination={{
-            clickable: true,
-          }}
-          navigation={{
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          }}
-          modules={[Navigation, Pagination]}
-          className={'h-[650px]'}>
-          <div className="swiper-button-next"></div>
-          <div className="swiper-button-prev"></div>
-          {workSliderData.slides.map((slide, index) => {
-            return slide.recipes.map((recipe, index) => {
+      {recipes && (
+        <div className={'w-[500px] min-w-[500px]'}>
+          <Swiper
+            spaceBetween={10}
+            pagination={{
+              clickable: true,
+            }}
+            navigation={{
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }}
+            modules={[Navigation, Pagination]}
+            className={'h-[700px]'}>
+            <div className="swiper-button-next"></div>
+            <div className="swiper-button-prev"></div>
+
+            {recipes.map((recipe, index) => {
               return (
                 <SwiperSlide key={index}>
-                  <div
-                    className={
-                      'group relative flex h-max items-center justify-center overflow-hidden rounded-2xl bg-transparent'
-                    }>
-                    <div
-                      className={
-                        'relative flex flex-col items-center justify-center overflow-auto '
-                      }>
+                  <div className="group relative flex h-max items-center justify-center overflow-hidden rounded-2xl bg-transparent">
+                    <div className="relative flex flex-col items-center justify-center overflow-auto">
                       {/*Image*/}
                       <Image
-                        src={recipe.path}
+                        src={recipe.share_link}
                         width={400}
                         height={100}
-                        alt={''}
-                        className={
-                          'z-20 rounded-xl transition-all duration-500 hover:translate-y-[10px] hover:border-2 hover:border-accent'
-                        }
+                        alt={recipe.name}
+                        className="z-20 rounded-xl transition-all duration-500 hover:translate-y-[10px] hover:border-2 hover:border-accent"
                       />
                       {/*Languages*/}
-                      <div
-                        className={
-                          'flex flex-row flex-nowrap justify-center gap-x-2'
-                        }>
-                        {recipe.criteria.map((language, index) => {
-                          return (
-                            <div
-                              key={index}
-                              className={`border-pinkish mt-3 overflow-auto rounded-2xl border-2 bg-primary bg-opacity-30 p-2 lg:mb-3 ${rubikRegular.variable} font-rubik text-[12px] lg:text-[14px]`}>
-                              {language}
-                            </div>
-                          )
-                        })}
+                      <div className="flex flex-row flex-nowrap justify-center gap-x-2">
+                        <div className="border-pinkish mt-3 overflow-auto rounded-2xl border-2 bg-primary bg-opacity-30 p-2 font-rubik text-[12px] lg:mb-3 lg:text-[14px]">
+                          {recipe.cooking_time}
+                        </div>
+                        <div className="border-pinkish mt-3 overflow-auto rounded-2xl border-2 bg-primary bg-opacity-30 p-2 font-rubik text-[12px] lg:mb-3 lg:text-[14px]">
+                          {recipe.servings}
+                        </div>
+                        <div className="border-pinkish mt-3 overflow-auto rounded-2xl border-2 bg-primary bg-opacity-30 p-2 font-rubik text-[12px] lg:mb-3 lg:text-[14px]">
+                          {recipe.difficulty}
+                        </div>
                       </div>
-                      <div
-                        className={`p-6 ${rubikRegular.variable} m-15 text-center font-rubik text-[11px] lg:text-[15px]`}>
-                        {recipe.description}
+                      <div className="max-h-72 max-w-[70%] overflow-hidden p-6 text-center font-rubik text-[0.5rem] lg:text-[15px]">
+                        {recipe.directions}
                       </div>
                       <a
-                        href={recipe.link}
+                        href={`/recipe/${recipe.recipe_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={
-                          'hover:border-pinkish mb-10 rounded-2xl border-2 border-secondary bg-opacity-30 p-2 transition-all duration-300 hover:cursor-pointer hover:border-8'
-                        }>
+                        className="hover:border-pinkish mb-10 mt-2 cursor-pointer rounded-2xl border-2 border-secondary bg-opacity-30 p-2 transition-all duration-300 hover:border-8">
                         View Recipe
                       </a>
                     </div>
                   </div>
                 </SwiperSlide>
               )
-            })
-          })}
-        </Swiper>
-      </div>
+            })}
+          </Swiper>
+        </div>
+      )}
     </div>
   )
 }

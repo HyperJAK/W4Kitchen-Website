@@ -31,11 +31,17 @@ const AuthRegister = () => {
     <Link href={'/api/auth/login'}>
       <Button
         style={
-          'justify-center w-50 flex flex-row border-solid border-secondary border-2 bg-white p-4 hover:bg-secondary hover:cursor-pointer flex-row flex text-opposite rounded-2xl hover:text-accent'
+          'justify-center w-50 flex flex-row border-solid border-secondary border-2 align-middle self-center bg-white p-4 hover:bg-secondary hover:cursor-pointer flex-row gap-5 flex text-opposite rounded-2xl hover:text-accent'
         }
         itemComponents={
           <>
-            <p>Icon</p> <p> External Registration</p>
+            <Image
+              src={'/icons/google.png'}
+              alt={'Google icon'}
+              width={25}
+              height={20}
+            />{' '}
+            <p> External Registration</p>
           </>
         }
         handle={handleAuthExternal}
