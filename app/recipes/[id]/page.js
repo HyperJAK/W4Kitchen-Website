@@ -1,5 +1,18 @@
+'use client'
 import Image from 'next/image'
 import Button from '@/components/shared/Button'
+import {useEffect, useState} from 'react'
+import {
+  GetRecipeDetails,
+  GetRecipeIngredients,
+  GetRecipePublisher,
+  GetRecipeReviews,
+} from '@/config/services/recipe'
+import Rating from '@/components/recipe/Rating'
+import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded'
+import InsightsRoundedIcon from '@mui/icons-material/InsightsRounded'
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded'
+import {Rubik} from 'next/font/google'
 
 const InterestData = {
   topInfo: [
@@ -36,42 +49,101 @@ const InterestData = {
   ],
 }
 
+const rubikBold = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+  weight: ['700'],
+})
+
 export default function SpecificRecipe({params}) {
   /*if (!recipe) {
     // Handle the case where no recipe data was found (optional)
     return <p>Recipe not found!</p>
   }*/
+  const [recipeDetails, setRecipeDetails] = useState('')
+  const [publisher, setPublisher] = useState('')
+  const [recipeIngredients, setRecipeIngredients] = useState([])
+  const [recipeReviews, setRecipeReviews] = useState([])
+  const [detailsHovered, setDetailsHovered] = useState(false)
 
   const UserInfoDiv = () => {
     return (
       <div className={'flex flex-row flex-nowrap'}>
         <Image
-          src={''}
+          src={/*publisher ? publisher.profilePic : */ ''}
           alt={'profile pic'}
           width={50}
           height={50}
         />
         {/*We use a fetch in this component to get the user info so like username*/}
-        <p>Username here</p>
-        <p>here date of publish</p>
+        <div className={'flex flex-row flex-wrap justify-center gap-5'}>
+          <div className={'rounded-full bg-secondary p-3'}>
+            {publisher.username}
+          </div>
+          <div className={'rounded-full bg-secondary p-3'}>
+            {publisher.email}
+          </div>
+          <div className={'rounded-full bg-secondary p-3'}>
+            {recipeDetails.date}
+          </div>
+        </div>
       </div>
     )
   }
 
   const TitleAndPicDiv = () => {
     return (
-      <div className={'m-8 h-80 rounded-2xl bg-recipeCategoriesImg bg-cover '}>
+      <div
+        className={'m-8 h-[600px] w-[100%] self-center rounded-2xl text-white'}>
         {/*We use a fetch in this component to get the user info so like username*/}
+
         <div
           className={
-            'flex h-80 flex-col flex-nowrap items-center justify-evenly gap-4 rounded-2xl bg-black/30 align-middle'
+            'relative flex h-[100%] flex-col flex-nowrap items-center justify-evenly gap-4 rounded-2xl bg-transparent align-middle'
           }>
-          <div>
-            <p>Recipe name here</p>
-            <p>Stars here</p>
+          <Image
+            src={'/recipeExample.png'}
+            alt={'recipe image'}
+            width={1000}
+            height={600}
+            className={'absolute z-10 w-[80%]'}
+          />
+
+          <div className={'z-30'}>
+            <p className={`${rubikBold.variable} font-rubik text-[3rem]`}>
+              {recipeDetails.name}
+            </p>
+            <p>
+              <div className={'flex flex-row justify-center self-center'}>
+                <Rating rating={recipeDetails.rating} />
+              </div>
+            </p>
           </div>
-          <div>
-            <p>3 buttons here</p>
+          <div
+            className={
+              'z-30 flex w-[80%] flex-row flex-wrap justify-center gap-10'
+            }>
+            <div
+              className={
+                'flex w-[15%] flex-row items-center justify-center gap-2 rounded-2xl bg-secondary p-3 text-[0.8rem]'
+              }>
+              <AccessTimeFilledRoundedIcon />
+              {recipeDetails.cooking_time}
+            </div>
+            <div
+              className={
+                'flex w-[15%] flex-row items-center justify-center gap-2 rounded-2xl bg-secondary p-3 text-[0.8rem]'
+              }>
+              <InsightsRoundedIcon />
+              {recipeDetails.difficulty}
+            </div>
+            <div
+              className={
+                'flex w-[15%] flex-row items-center justify-center gap-2 rounded-2xl bg-secondary p-3 text-[0.8rem]'
+              }>
+              <PeopleAltRoundedIcon />
+              {recipeDetails.servings}
+            </div>
           </div>
         </div>
       </div>
@@ -80,52 +152,73 @@ export default function SpecificRecipe({params}) {
 
   const ButtonsChoiceDiv = () => {
     return (
-      <div className={'flex flex-row flex-nowrap justify-center gap-60'}>
-        <Button />
-        <Button />
+      <div className={'flex flex-row flex-nowrap justify-center gap-36'}>
+        <Button
+          style={
+            'justify-center w-[40%] flex flex-row border-solid border-secondary border-2 bg-secondary p-3 hover:bg-accent hover:cursor-pointer flex-row flex text-page rounded-full hover:text-opposite'
+          }
+          itemComponents={<p>Save Recipe</p>}
+          handle={''}
+        />
+        <Button
+          style={
+            'justify-center w-[40%] flex flex-row border-solid border-secondary border-2 bg-secondary p-3 hover:bg-accent hover:cursor-pointer flex-row flex text-page rounded-full hover:text-opposite'
+          }
+          itemComponents={<p>Share Recipe</p>}
+          handle={''}
+        />
       </div>
     )
   }
 
   const IngredientsAndPrep = () => {
     return (
-      <div className={'flex flex-col flex-nowrap justify-center'}>
-        {/*Titles*/}
-        <div className={'flex flex-row flex-nowrap justify-center gap-60'}>
-          <h1>title 1</h1>
-          <h1>title 2</h1>
-        </div>
-        <div className={'flex flex-row flex-nowrap justify-center gap-60'}>
-          <p>
-            Heat canola and sesame oils in a large, nonstick skillet over
-            medium-high heat. Add carrot and 1/4 cup green onion; cook, stirring
-            constantly, for 2 minutes. Stir in garlic powder and ginger and cook
-            for 2 minutes. Stir in rice, salt, and pepper; cook, stirring only
-            once or twice, until rice is lightly browned, about 5 minutes. Stir
-            in chicken and peas; cook for 2 minutes. Push rice mixture to the
-            sides of the pan, creating a circle in the middle. Add butter to the
-            center of the pan. When melted, pour eggs into the center. Cook
-            eggs, stirring often, until almost set, about 3 minutes. Stir eggs
-            into the rice mixture. Stir in soy sauce and rice vinegar; cook for
-            2 more minutes. Serve immediately topped with Sriracha mayo and
-            green onions.
-          </p>
-          <p>
-            Heat canola and sesame oils in a large, nonstick skillet over
-            medium-high heat. Add carrot and 1/4 cup green onion; cook, stirring
-            constantly, for 2 minutes. Stir in garlic powder and ginger and cook
-            for 2 minutes. Stir in rice, salt, and pepper; cook, stirring only
-            once or twice, until rice is lightly browned, about 5 minutes. Stir
-            in chicken and peas; cook for 2 minutes. Push rice mixture to the
-            sides of the pan, creating a circle in the middle. Add butter to the
-            center of the pan. When melted, pour eggs into the center. Cook
-            eggs, stirring often, until almost set, about 3 minutes. Stir eggs
-            into the rice mixture. Stir in soy sauce and rice vinegar; cook for
-            2 more minutes. Serve immediately topped with Sriracha mayo and
-            green onions.
-          </p>
-        </div>
-      </div>
+      <>
+        {recipeDetails && recipeIngredients && (
+          <div className={'flex flex-row flex-nowrap justify-center'}>
+            {/* Ingredients */}
+            <div
+              className={
+                'flex h-fit w-[50%] flex-col flex-nowrap items-center justify-center gap-2 p-10 align-middle'
+              }>
+              <h2 className={`${rubikBold.variable} font-rubik text-[2rem]`}>
+                Ingredients
+              </h2>
+              {/* Map over recipeIngredients and display each ingredient */}
+              {recipeIngredients.map((ingredient, index) => (
+                <div
+                  className={'relative'}
+                  key={ingredient.ingredient_id}>
+                  <div
+                    key={index}
+                    className={'relative hover:cursor-pointer'}
+                    onMouseEnter={() => setDetailsHovered(true)}
+                    onMouseLeave={() => setDetailsHovered(false)}>
+                    <span className={'text-[3rem]'}>.</span>
+                    {ingredient.quantity} {ingredient.unit_of_measure}{' '}
+                    {ingredient.name}
+                  </div>
+                  <div
+                    className={`absolute bottom-0 left-0 m-[-100px] rounded-3xl bg-black/70 p-3 text-white ${detailsHovered ? 'block' : 'hidden'}`}>
+                    {ingredient.detailed_instructions}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Instructions */}
+            <div
+              className={
+                'flex h-fit w-[50%] flex-col flex-nowrap items-center justify-center gap-2 p-10 align-middle'
+              }>
+              <h2 className={`${rubikBold.variable} font-rubik text-[2rem]`}>
+                Instructions
+              </h2>
+              <p>{recipeDetails.directions}</p>
+            </div>
+          </div>
+        )}
+      </>
     )
   }
 
@@ -157,11 +250,100 @@ export default function SpecificRecipe({params}) {
     )
   }
 
+  const RecipeReviews = () => {
+    return (
+      <div
+        className={
+          'flex w-[90%] flex-col flex-nowrap justify-center gap-20 rounded-2xl bg-accent p-10'
+        }>
+        {/*Review count*/}
+        <div className={'text-center'}>
+          Reviews {recipeReviews ? recipeReviews.length : ''}
+        </div>
+        {/*filter*/}
+        <div className={'text-right'}>filter here</div>
+        {recipeReviews
+          ? recipeReviews.map((review, index) => {
+              return (
+                <div
+                  className={'flex flex-col'}
+                  key={index}>
+                  {/*publisher info*/}
+                  <div className={'flex flex-row gap-3'}>
+                    <Image
+                      src={''}
+                      alt={'profile pic'}
+                    />
+                    <p>{review.username}</p>
+                    <p>{review.email}</p>
+                  </div>
+                  <div className={'flex flex-row gap-3'}>
+                    <Rating rating={review.rating} />
+                  </div>
+                  <div>{review.description}</div>
+                </div>
+              )
+            })
+          : ''}
+      </div>
+    )
+  }
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const id = urlParams.get('id')
+    console.log('Recipe id is: ' + id)
+
+    async function fetchData() {
+      const recipeDetails = await GetRecipeDetails({id: id})
+
+      if (recipeDetails) {
+        console.log('Got recipe ' + recipeDetails.recipe_id + ' details')
+        setRecipeDetails(recipeDetails)
+
+        const publisherInfo = await GetRecipePublisher({
+          id: recipeDetails.User_user_id,
+        })
+
+        if (publisherInfo) {
+          setPublisher(publisherInfo)
+
+          const ingredients = await GetRecipeIngredients({
+            id: recipeDetails.recipe_id,
+          })
+
+          if (recipeIngredients) {
+            setRecipeIngredients(ingredients)
+            const reviews = await GetRecipeReviews({
+              id: recipeDetails.recipe_id,
+            })
+
+            if (reviews) {
+              setRecipeReviews(reviews)
+            } else {
+              console.log('Failed to get recipe reviews')
+            }
+          } else {
+            console.log('Failed to get recipe ingredients')
+          }
+        } else {
+          console.log('Failed to get publisher details')
+        }
+      } else {
+        console.log('Failed to get recipe details')
+      }
+    }
+    fetchData()
+  }, [])
+
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-between gap-40 p-24">
+      <main className="flex min-h-screen flex-col items-center justify-between gap-40 p-24 text-black">
         {/*Main div*/}
-        <div className={'flex w-[90%] flex-col flex-nowrap bg-accent'}>
+        <div
+          className={
+            'flex w-[90%] flex-col flex-nowrap rounded-2xl bg-accent p-10'
+          }>
           {/*User info div*/}
           <UserInfoDiv />
           {/*title and picture div*/}
@@ -174,34 +356,7 @@ export default function SpecificRecipe({params}) {
           <NutritionFacts />
         </div>
         {/*Reviews div*/}
-        <div className={'flex w-[90%] flex-col flex-nowrap bg-accent'}>
-          {/*title*/}
-          <h1>User Reviews</h1>
-          {/*sort div*/}
-          <div></div>
-          {/*reviews div*/}
-          <div>
-            {/*User info div*/}
-            <UserInfoDiv />
-            {/*Stars div*/}
-            {/*review div*/}
-            <p>
-              Review is here and it is big, example: Heat canola and sesame oils
-              in a large, nonstick skillet over medium-high heat. Add carrot and
-              1/4 cup green onion; cook, stirring constantly, for 2 minutes.
-              Stir in garlic powder and ginger and cook for 2 minutes. Stir in
-              rice, salt, and pepper; cook, stirring only once or twice, until
-              rice is lightly browned, about 5 minutes. Stir in chicken and
-              peas; cook for 2 minutes. Push rice mixture to the sides of the
-              pan, creating a circle in the middle. Add butter to the center of
-              the pan. When melted, pour eggs into the center. Cook eggs,
-              stirring often, until almost set, about 3 minutes. Stir eggs into
-              the rice mixture. Stir in soy sauce and rice vinegar; cook for 2
-              more minutes. Serve immediately topped with Sriracha mayo and
-              green onions.
-            </p>
-          </div>
-        </div>
+        <RecipeReviews />
       </main>
     </>
   )

@@ -4,7 +4,7 @@ import {Rubik} from 'next/font/google'
 
 //This is just a demo of how the format of the json file should be returned
 //in the API
-const workSliderData = {
+/*const workSliderData = {
   slides: [
     {
       recipes: [
@@ -41,7 +41,7 @@ const workSliderData = {
       ],
     },
   ],
-}
+}*/
 
 //components
 import Socials from '../Socials'
@@ -168,7 +168,7 @@ const FeaturedRecipes = () => {
                         {recipe.directions}
                       </div>
                       <a
-                        href={`/recipe/${recipe.recipe_id}`}
+                        href={`/recipes/${recipe.recipe_id}?id=${recipe.recipe_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:border-pinkish mb-10 mt-2 cursor-pointer rounded-2xl border-2 border-secondary bg-opacity-30 p-2 transition-all duration-300 hover:border-8">
