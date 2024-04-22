@@ -95,7 +95,7 @@ const FeaturedRecipes = () => {
       } catch (error) {}
     }
     fetchData()
-  })
+  }, [])
 
   return (
     <div
