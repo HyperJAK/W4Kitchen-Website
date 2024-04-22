@@ -109,6 +109,7 @@ export default function SpecificRecipe({params}) {
             className={'absolute z-10 w-[800px]'}
           />
 
+          {/*title and rating*/}
           <div className={'z-30'}>
             <p
               className={`${rubikBold.variable} font-rubik text-[3rem] text-opposite`}>

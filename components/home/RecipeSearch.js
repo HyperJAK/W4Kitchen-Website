@@ -98,15 +98,17 @@ const RecipeSearch = () => {
                   height={30}
                   className={'rounded-2xl mix-blend-lighten hover:bg-secondary'}
                 />
-                <Image
-                  src={'/icons/searchBtn.png'}
-                  alt={'search icon'}
-                  width={60}
-                  height={30}
-                  className={
-                    'rounded-2xl mix-blend-difference hover:bg-secondary'
-                  }
-                />
+                <Link href={`/recipes/searchResults?id=${recipeName}`}>
+                  <Image
+                    src={'/icons/searchBtn.png'}
+                    alt={'search icon'}
+                    width={60}
+                    height={30}
+                    className={
+                      'rounded-2xl mix-blend-difference hover:bg-secondary'
+                    }
+                  />
+                </Link>
               </div>
             </div>
           </div>
