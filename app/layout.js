@@ -1,10 +1,15 @@
-import {Inter} from 'next/font/google'
+import {Rubik} from 'next/font/google'
 import './globals.css'
 import Nav from '@/components/shared/Nav'
-import Logo from '@/components/shared/Logo'
-import Layout from '@/components/shared/Layout'
 
-const inter = Inter({subsets: ['latin']})
+// app/layout.jsx
+import {UserProvider} from '@auth0/nextjs-auth0/client'
+
+const rubikRegular = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+  weight: ['400'],
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -13,8 +18,18 @@ export const metadata = {
 
 export default function RootLayout({children}) {
   return (
-    <Layout>
-      <body className={inter.className}>{children}</body>
-    </Layout>
+    <html lang="en">
+      <UserProvider>
+        <head>
+          <title>W4Kitchen</title>
+        </head>
+
+        <body
+          className={`${rubikRegular.variable} flex flex-col bg-page font-rubik`}>
+          <Nav />
+          {children}
+        </body>
+      </UserProvider>
+    </html>
   )
 }
