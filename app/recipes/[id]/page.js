@@ -106,11 +106,13 @@ export default function SpecificRecipe({params}) {
             alt={'recipe image'}
             width={1000}
             height={600}
-            className={'absolute z-10 w-[80%]'}
+            className={'absolute z-10 w-[800px]'}
           />
 
+          {/*title and rating*/}
           <div className={'z-30'}>
-            <p className={`${rubikBold.variable} font-rubik text-[3rem]`}>
+            <p
+              className={`${rubikBold.variable} font-rubik text-[3rem] text-opposite`}>
               {recipeDetails.name}
             </p>
             <p>
@@ -224,16 +226,26 @@ export default function SpecificRecipe({params}) {
 
   const NutritionFacts = () => {
     return (
-      <div className={'flex flex-col flex-nowrap justify-center'}>
-        <h1>Title</h1>
+      <div
+        className={
+          'flex flex-col flex-nowrap items-center justify-between gap-10'
+        }>
+        <div
+          className={`flex flex-col items-center justify-center ${rubikBold.variable} font-rubik text-[2rem]`}>
+          <h1>Nutrition Facts</h1>
+          <h1>(Per serving)</h1>
+        </div>
         <div>
-          <div className={'flex flex-row flex-wrap justify-evenly gap-5'}>
+          <div
+            className={
+              'flex flex-row flex-wrap justify-center gap-10 lg:gap-32'
+            }>
             {InterestData.bottomInfo.map((infoData) => {
               return (
                 <div
                   key={infoData.description}
                   className={
-                    'flex h-[180px] w-[180px] min-w-[180px] flex-col items-center justify-between rounded-2xl border-2 border-solid border-secondary p-6 text-center align-middle'
+                    'flex h-[180px] w-[180px] min-w-[180px] flex-col items-center justify-evenly rounded-2xl border-2 border-solid border-secondary p-6 text-center align-middle'
                   }>
                   {/*Icon / Main Text*/}
                   <h1 className={'text-2xl text-secondary'}>
@@ -254,11 +266,12 @@ export default function SpecificRecipe({params}) {
     return (
       <div
         className={
-          'flex w-[90%] flex-col flex-nowrap justify-center gap-20 rounded-2xl bg-accent p-10'
+          'flex w-[90%] flex-col flex-nowrap justify-center gap-10 rounded-2xl bg-accent p-10'
         }>
         {/*Review count*/}
-        <div className={'text-center'}>
-          Reviews {recipeReviews ? recipeReviews.length : ''}
+        <div
+          className={`text-center ${rubikBold.variable} font-rubik text-[2rem]`}>
+          Reviews ({recipeReviews ? recipeReviews.length : ''})
         </div>
         {/*filter*/}
         <div className={'text-right'}>filter here</div>
@@ -266,21 +279,35 @@ export default function SpecificRecipe({params}) {
           ? recipeReviews.map((review, index) => {
               return (
                 <div
-                  className={'flex flex-col'}
+                  className={
+                    'flex flex-col justify-between gap-2 rounded-3xl border border-b-2 border-b-secondary bg-accent p-10 text-accent'
+                  }
                   key={index}>
                   {/*publisher info*/}
-                  <div className={'flex flex-row gap-3'}>
+                  <div className={'flex flex-row flex-nowrap'}>
                     <Image
-                      src={''}
+                      src={/*publisher ? publisher.profilePic : */ ''}
                       alt={'profile pic'}
+                      width={50}
+                      height={50}
                     />
-                    <p>{review.username}</p>
-                    <p>{review.email}</p>
+                    {/*We use a fetch in this component to get the user info so like username*/}
+                    <div
+                      className={
+                        'flex flex-row flex-wrap justify-center gap-5'
+                      }>
+                      <div className={'rounded-full bg-secondary p-3'}>
+                        {review.username}
+                      </div>
+                      <div className={'rounded-full bg-secondary p-3'}>
+                        {review.email}
+                      </div>
+                    </div>
                   </div>
                   <div className={'flex flex-row gap-3'}>
                     <Rating rating={review.rating} />
                   </div>
-                  <div>{review.description}</div>
+                  <div className={'text-opposite'}>{review.description}</div>
                 </div>
               )
             })
@@ -338,26 +365,28 @@ export default function SpecificRecipe({params}) {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center justify-between gap-40 p-24 text-black">
-        {/*Main div*/}
-        <div
-          className={
-            'flex w-[90%] flex-col flex-nowrap rounded-2xl bg-accent p-10'
-          }>
-          {/*User info div*/}
-          <UserInfoDiv />
-          {/*title and picture div*/}
-          <TitleAndPicDiv />
-          {/*buttons choice div*/}
-          <ButtonsChoiceDiv />
-          {/*ingredients and prep method div*/}
-          <IngredientsAndPrep />
-          {/*Nutrition facts div*/}
-          <NutritionFacts />
-        </div>
-        {/*Reviews div*/}
-        <RecipeReviews />
-      </main>
+      {recipeDetails && publisher && recipeIngredients && recipeReviews && (
+        <main className="flex min-h-screen flex-col items-center justify-between gap-40 p-24 text-black">
+          {/*Main div*/}
+          <div
+            className={
+              'flex w-[90%] flex-col flex-nowrap rounded-2xl bg-accent p-10'
+            }>
+            {/*User info div*/}
+            <UserInfoDiv />
+            {/*title and picture div*/}
+            <TitleAndPicDiv />
+            {/*buttons choice div*/}
+            <ButtonsChoiceDiv />
+            {/*ingredients and prep method div*/}
+            <IngredientsAndPrep />
+            {/*Nutrition facts div*/}
+            <NutritionFacts />
+          </div>
+          {/*Reviews div*/}
+          <RecipeReviews />
+        </main>
+      )}
     </>
   )
 }
