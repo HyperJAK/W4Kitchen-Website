@@ -2,16 +2,7 @@
 import Image from 'next/image'
 import Button from '@/components/shared/Button'
 import {useEffect, useState} from 'react'
-import {
-  GetRecipeDetails,
-  GetRecipeIngredients,
-  GetRecipePublisher,
-  GetRecipeReviews,
-} from '@/config/services/recipe'
 import Rating from '@/components/recipe/Rating'
-import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded'
-import InsightsRoundedIcon from '@mui/icons-material/InsightsRounded'
-import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded'
 import {Rubik} from 'next/font/google'
 import {GetProductDetails} from '@/config/services/product'
 
