@@ -20,8 +20,9 @@ export async function POST(req, res) {
     if (!data) {
       return NextResponse.json({message: 'Cart not found'}, {status: 404})
     } else {
-      await connection.query('UPDATE carts set status = 1')
-      await connection.release()
+      const connection2 = await pool.getConnection()
+      await connection2.query('UPDATE carts set status = 1')
+      await connection2.release()
     }
 
     return NextResponse.json(data, {status: 200})

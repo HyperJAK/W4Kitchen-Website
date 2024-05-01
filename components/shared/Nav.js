@@ -194,12 +194,10 @@ const Nav = () => {
               if (response2.insertId) {
                 //here we put the nav value of id so we can use it for profile page:
                 setAuthed(true)
-                const storedUser = localStorage.getItem('user')
 
-                if (storedUser) {
-                  const parsedUser = JSON.parse(storedUser)
-                  setId(parsedUser.userId)
-                  console.log(parsedUser.userId)
+                if (getCurrentUserId()) {
+                  setId(getCurrentUserId())
+                  console.log(getCurrentUserId())
                 }
               } else {
                 console.log('Failed to Signup, err Nav line 174')
@@ -207,12 +205,10 @@ const Nav = () => {
             } else {
               setAuthed(true)
               //here we put the nav value of id so we can use it for profile page:
-              const storedUser = localStorage.getItem('user')
 
-              if (storedUser) {
-                const parsedUser = JSON.parse(storedUser)
-                setId(parsedUser.userId)
-                console.log(parsedUser.userId)
+              if (getCurrentUserId()) {
+                setId(getCurrentUserId())
+                console.log(getCurrentUserId())
               }
             }
           } catch (error) {
@@ -225,11 +221,18 @@ const Nav = () => {
       }
     }
     /*fetchData2()*/
-    fetchData()
+    if (getCurrentUserId() === null) {
+      fetchData()
+    } else {
+      setAuthed(true)
+      setId(getCurrentUserId)
+    }
   }, [])
 
   const handleLogout = (e) => {
     setAuthed(false)
+    setCurrentUserId(null)
+    setCurrentCartId(null)
   }
 
   return (

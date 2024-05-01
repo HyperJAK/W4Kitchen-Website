@@ -151,11 +151,6 @@ export async function SignUpFunc({email, password, username}) {
 
     const data = await response.json()
 
-    console.log('RESPONSESSSS')
-    console.log(data.user_id)
-
-    console.log(data.message)
-
     if (data.insertId) {
       const userForStorage = {
         userId: data.insertId,
