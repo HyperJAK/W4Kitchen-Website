@@ -9,6 +9,7 @@ import {GetUserInfo, UpdateProfile} from '@/config/services/user'
 import ResidentialInformation from '@/components/profile/ResidentialInformation'
 import CreditCardInfo from '@/components/profile/CreditCardInfo'
 import ErrorNotification from '@/components/shared/ErrorNotification'
+import {PlaceOrderForUser} from '@/config/services/order'
 
 const rubikBold = Rubik({
   subsets: ['latin'],
@@ -70,7 +71,20 @@ export default function Order() {
       ) {
         await UpdateProfile({data: userDetails})
 
-        setOrderAdded(true)
+        const res = await PlaceOrderForUser({
+          address:
+            userDetails.country +
+            ' ' +
+            userDetails.city +
+            ' ' +
+            userDetails.address,
+          cartId: getCurrentCartId(),
+          userId: getCurrentUserId(),
+        })
+
+        if (res) {
+          setOrderAdded(true)
+        }
       } else {
         setShowError(true)
       }
