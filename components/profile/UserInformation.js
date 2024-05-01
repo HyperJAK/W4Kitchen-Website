@@ -10,13 +10,6 @@ import Link from 'next/link'
 import EmailTextfield from '@/components/shared/Validation/EmailTextfield'
 import PasswordTextfield from '@/components/shared/Validation/PasswordTextfield'
 import LabelField from '@/components/shared/LabelField'
-import {
-  HashPassword,
-  SignInFunc,
-  UpdateProfile,
-  ValidEmail,
-  ValidPassword,
-} from '@/config/Utilities'
 
 const rubikBold = Rubik({
   subsets: ['latin'],

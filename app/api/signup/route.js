@@ -18,7 +18,7 @@ export async function POST(req, res) {
 
     const connection = await pool.getConnection()
     const [data] = await connection.query(
-      'INSERT INTO user (email, username, password, registration_date) VALUES (?, ?, ?, ?)',
+      'INSERT INTO user (email, username, password, registration_date) VALUES (?, ?, ?, ?);',
       [email, username, password, currentDate]
     )
 
@@ -27,7 +27,6 @@ export async function POST(req, res) {
     if (!data) {
       return NextResponse.json({message: 'User not found'}, {status: 404})
     }
-    console.log('The id of the inserted item is: ' + data.insertId)
 
     return NextResponse.json(data, {status: 200})
   } catch (error) {

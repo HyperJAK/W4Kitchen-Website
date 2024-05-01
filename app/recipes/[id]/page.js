@@ -176,7 +176,7 @@ export default function SpecificRecipe({params}) {
   const IngredientsAndPrep = () => {
     return (
       <>
-        {recipeDetails && recipeIngredients && (
+        {recipeDetails.length > 0 && recipeIngredients.length > 0 && (
           <div className={'flex flex-row flex-nowrap justify-center'}>
             {/* Ingredients */}
             <div

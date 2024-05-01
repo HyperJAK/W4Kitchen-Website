@@ -3,11 +3,10 @@
 import {Rubik} from 'next/font/google'
 
 //components
-import Image from 'next/image'
 import {useState} from 'react'
 import Button from '@/components/shared/Button'
-import Link from 'next/link'
-import {HashPassword, UpdateProfile} from '@/config/Utilities'
+import {HashPassword} from '@/config/Utilities'
+import {UpdateProfile} from '@/config/services/user'
 
 const rubikBold = Rubik({
   subsets: ['latin'],
