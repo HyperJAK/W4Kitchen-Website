@@ -8,6 +8,7 @@ import UserProfilePicDiv from '@/components/profile/UserProfilePicDiv'
 import ResidentialInformation from '@/components/profile/ResidentialInformation'
 import AboutMe from '@/components/profile/AboutMe'
 import CreditCardInfo from '@/components/profile/CreditCardInfo'
+import {GetUserInfo} from '@/config/services/user'
 
 const rubikBold = Rubik({
   subsets: ['latin'],
@@ -30,18 +31,13 @@ export default function Profile({params}) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/profile?id=${params.id}`,
-          {
-            method: 'GET',
-          }
-        )
+        const response = await GetUserInfo({id: params.id})
 
-        const data = await response.json()
-
-        setData(data)
-        setCPassword(data.password)
-        setOriginalPass(data.password)
+        if (response) {
+          setData(response)
+          setCPassword(response.password)
+          setOriginalPass(response.password)
+        }
       } catch (error) {
         console.error(error)
       }

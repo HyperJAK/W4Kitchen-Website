@@ -1,4 +1,5 @@
 import {AES, enc} from 'crypto-js'
+import {currentUserId, setCurrentUserId} from '@/config/data'
 
 export function ValidAlphaInput(input) {
   const inputRegex = /^[a-zA-Z]+$/
@@ -119,6 +120,7 @@ export async function SignInFunc({email, password}) {
 
       localStorage.setItem('user', JSON.stringify(userForStorage))
       console.log('Saved in local storage after signin')
+      setCurrentUserId(data.user_id)
     }
 
     return data
@@ -149,11 +151,6 @@ export async function SignUpFunc({email, password, username}) {
 
     const data = await response.json()
 
-    console.log('RESPONSESSSS')
-    console.log(data.user_id)
-
-    console.log(data.message)
-
     if (data.insertId) {
       const userForStorage = {
         userId: data.insertId,
@@ -161,33 +158,10 @@ export async function SignUpFunc({email, password, username}) {
 
       localStorage.setItem('user', JSON.stringify(userForStorage))
       console.log('Saved in local storage after signup')
+      setCurrentUserId(data.insertId)
     }
 
     return data
-  } catch (error) {
-    //alert(error.response.data.error);
-    console.log(error)
-  }
-}
-
-export async function UpdateProfile({data}) {
-  try {
-    console.log('The username is: ' + data.username)
-    console.log('The address is: ' + data.address)
-    const response = await fetch('http://localhost:3000/api/profile', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-
-    const resData = await response.json()
-
-    console.log('RESPONSESSSS')
-    //console.log(response.data.data)
-
-    console.log(resData.message)
   } catch (error) {
     //alert(error.response.data.error);
     console.log(error)
