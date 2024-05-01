@@ -4,7 +4,7 @@ import {random} from 'nanoid'
 import StarRoundedIcon from '@mui/icons-material/StarRounded'
 import {yellow} from '@mui/material/colors'
 
-export default function Rating({rating}) {
+export default function Rating({rating, fontSize}) {
   const addStars = () => {
     var indents = []
     for (var i = 0; i < rating; i++) {
@@ -12,7 +12,7 @@ export default function Rating({rating}) {
         <StarRoundedIcon
           key={i + random(1, 10000)}
           sx={{color: yellow[500]}}
-          fontSize="large"
+          fontSize={fontSize ? fontSize : 'large'}
         />
       )
     }
