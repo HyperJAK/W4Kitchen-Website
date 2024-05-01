@@ -5,6 +5,8 @@ import {useEffect, useState} from 'react'
 import Rating from '@/components/recipe/Rating'
 import {Rubik} from 'next/font/google'
 import {GetProductDetails} from '@/config/services/product'
+import {AddProductToCart} from '@/config/services/cart'
+import SuccessNotification from '@/components/shared/SuccessNotification'
 
 const InterestData = {
   topInfo: [
@@ -54,6 +56,25 @@ export default function SpecificRecipe({params}) {
   }*/
   const [productDetails, setProductDetails] = useState('')
   const [detailsHovered, setDetailsHovered] = useState(false)
+  const [productAdded, setProductAdded] = useState(false)
+
+  const handleAddToCart = async () => {
+    const storedUser = localStorage.getItem('user')
+
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser)
+      try {
+        const response = await AddProductToCart({
+          userId: parsedUser.userId,
+          productId: productDetails.product_id,
+        })
+
+        if (response) {
+          setProductAdded(true)
+        }
+      } catch (e) {}
+    }
+  }
 
   const TitleAndPicDiv = () => {
     return (
@@ -97,7 +118,7 @@ export default function SpecificRecipe({params}) {
             'justify-center w-[40%] flex flex-row border-solid border-secondary border-2 bg-secondary p-3 hover:bg-accent hover:cursor-pointer flex-row flex text-page rounded-full hover:text-opposite'
           }
           itemComponents={<p>Add to Cart</p>}
-          handle={''}
+          handle={handleAddToCart}
         />
         <Button
           style={
@@ -154,6 +175,16 @@ export default function SpecificRecipe({params}) {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    if (productAdded) {
+      const timeout = setTimeout(() => {
+        setProductAdded(false)
+      }, 3000)
+
+      return () => clearTimeout(timeout)
+    }
+  }, [productAdded, setProductAdded])
+
   return (
     <>
       {productDetails && (
@@ -163,6 +194,14 @@ export default function SpecificRecipe({params}) {
             className={
               'flex w-[90%] flex-col flex-nowrap rounded-2xl bg-accent p-10'
             }>
+            <div className={'top-200 absolute w-[100%] self-center'}>
+              {productAdded && (
+                <SuccessNotification
+                  message={'Product was added to your cart'}
+                />
+              )}
+            </div>
+
             {/*title and picture div*/}
             <TitleAndPicDiv />
             {/*buttons choice div*/}
