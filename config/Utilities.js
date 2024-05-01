@@ -1,4 +1,5 @@
 import {AES, enc} from 'crypto-js'
+import {currentUserId, setCurrentUserId} from '@/config/data'
 
 export function ValidAlphaInput(input) {
   const inputRegex = /^[a-zA-Z]+$/
@@ -119,6 +120,7 @@ export async function SignInFunc({email, password}) {
 
       localStorage.setItem('user', JSON.stringify(userForStorage))
       console.log('Saved in local storage after signin')
+      setCurrentUserId(data.user_id)
     }
 
     return data
@@ -161,6 +163,7 @@ export async function SignUpFunc({email, password, username}) {
 
       localStorage.setItem('user', JSON.stringify(userForStorage))
       console.log('Saved in local storage after signup')
+      setCurrentUserId(data.insertId)
     }
 
     return data

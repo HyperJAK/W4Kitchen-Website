@@ -1,6 +1,5 @@
 import pool from '@/config/db'
 import {NextResponse} from 'next/server'
-import {DecryptPassword, EncryptPassword} from '@/config/Utilities'
 
 export async function POST(req, res) {
   try {

@@ -37,6 +37,19 @@ import SignUp from '@/components/shared/Validation/SignUp'
 import Title from '@/components/shared/Title'
 import SignIn from '@/components/shared/Validation/SignIn'
 import {HashPassword, SignInFunc, SignUpFunc} from '@/config/Utilities'
+import {
+  currentCartId,
+  currentUserId,
+  getCurrentCartId,
+  getCurrentUserId,
+  setCurrentCartId,
+  setCurrentUserId,
+} from '@/config/data'
+import {GetProductDetails} from '@/config/services/product'
+import {
+  CheckUserCartStatus,
+  GetAllActiveCartItems,
+} from '@/config/services/cart'
 
 const rubikRegular = Rubik({
   subsets: ['latin'],
@@ -94,8 +107,25 @@ const Nav = () => {
     /*handle contact us clicked*/
   }
 
+  const handleNopeClick = () => {
+    /*handle contact us clicked*/
+  }
+
   const handleAboutUsClick = () => {
     /*handle about us clicked*/
+  }
+
+  const handleCartClicked = async () => {
+    try {
+      const response1 = await CheckUserCartStatus({userId: getCurrentUserId()})
+
+      if (response1) {
+        setCurrentCartId(response1.cart_id)
+
+        console.log('Current user id: ' + getCurrentUserId())
+        console.log('Current Cart id: ' + getCurrentCartId())
+      }
+    } catch (e) {}
   }
 
   useEffect(() => {
@@ -284,6 +314,25 @@ const Nav = () => {
               }
               handle={handleLanguageButtonClick}
             />
+
+            {/*User Cart*/}
+            <Link href={'/cart'}>
+              <Button
+                itemComponents={
+                  <div className={'flex flex-row gap-2'}>
+                    <p>Your Cart</p>
+                    <Image
+                      src={'/icons/shopping_cart.png'}
+                      alt={'arrow down'}
+                      width={20}
+                      height={20}
+                    />
+                  </div>
+                }
+                handle={handleCartClicked}
+              />
+            </Link>
+
             {/*Profile button here*/}
             <div
               className={'rounded-full bg-accent p-2'}
