@@ -90,7 +90,7 @@ export default function SpecificRecipe({params}) {
             alt={'product image'}
             width={800}
             height={400}
-            className={'z-10 w-[600px]'}
+            className={'z-10 w-[600px] rounded-2xl'}
           />
 
           {/*title and rating*/}
