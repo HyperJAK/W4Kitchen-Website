@@ -21,22 +21,6 @@ export default function Cart() {
   const [detailsHovered, setDetailsHovered] = useState(false)
   const [orderAdded, setOrderAdded] = useState(false)
 
-  const handlePlaceOrder = async () => {
-    /*if (storedUser) {
-      const parsedUser = JSON.parse(storedUser)
-      try {
-        const response = await AddProductToCart({
-          userId: parsedUser.userId,
-          productId: productDetails.product_id,
-        })
-
-        if (response) {
-          setOrderAdded(true)
-        }
-      } catch (e) {}
-    }*/
-  }
-
   useEffect(() => {
     console.log('My cart id: ' + getCurrentCartId())
     async function fetchData() {
@@ -87,7 +71,7 @@ export default function Cart() {
             </p>
 
             <div className={'flex flex-col justify-center gap-5'}>
-              <Link href={'/'}>
+              <Link href={'/order'}>
                 <Button
                   style={
                     'flex flex-row justify-center p-3 bg-secondary rounded-2xl text-accent hover:bg-accent border-2 border-secondary hover:text-opposite'
@@ -103,7 +87,7 @@ export default function Cart() {
                       />
                     </div>
                   }
-                  handle={handlePlaceOrder}
+                  handle={''}
                 />
               </Link>
 
